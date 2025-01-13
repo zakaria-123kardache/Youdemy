@@ -1,6 +1,6 @@
 <?php
 
-class Ecatag {
+class Tagcategories {
 
     private int $id ; 
     private string $name ;

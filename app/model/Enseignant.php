@@ -2,7 +2,7 @@
 
 <?php
 
-require_once('./app/controller/Utilisateur.php');
+require_once('./app/model/Utilisateur.php');
 
 class Enseignant extends Utilisateur {
 

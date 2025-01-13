@@ -1,6 +1,6 @@
 <?php
 
-include_once('./app/controller/Utilisateur.php');
+include_once('./app/model/Utilisateur.php');
 
 class Etudiant extends Utilisateur {
 
