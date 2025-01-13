@@ -22,4 +22,5 @@ class Enseignant extends Utilisateur {
     public function accesStatiquefunction (){
 
     }
+    
 }
