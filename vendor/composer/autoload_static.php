@@ -10,13 +10,18 @@ class ComposerStaticInit5a0441eb479a6a4a723791aff66c8b33
         'A' => 
         array (
             'App\\Model\\' => 10,
+            'App\\Http\\' => 9,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
         'App\\Model\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/app/model',
+            0 => __DIR__ . '/../..' . '/app/Model',
+        ),
+        'App\\Http\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/http',
         ),
     );
 
