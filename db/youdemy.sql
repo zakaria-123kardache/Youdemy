@@ -19,3 +19,27 @@ CREATE TABLE utilisateurs (
     photo VARCHAR(250)
 )
 
+CREATE Table categories (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR (50),
+    description TEXT
+)
+
+CREATE tags (
+    id INT PRIMARY KEY AUTO_INCREMENT ,
+    name VARCHAR(50),
+    description TEXT,
+    logo VARCHAR(250),
+)
+
+CREATE TABLE cours (
+    
+    id INT PRIMARY KEY AUTO_INCREMENT ,
+    name VARCHAR (250),
+    description TEXT , 
+    contenu VARCHAR (255),
+    photo VARCHAR (255)
+
+)
+
+
