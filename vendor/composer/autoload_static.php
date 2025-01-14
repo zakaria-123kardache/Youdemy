@@ -21,7 +21,7 @@ class ComposerStaticInit5a0441eb479a6a4a723791aff66c8b33
         ),
         'App\\Http\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/app/http',
+            0 => __DIR__ . '/../..' . '/app/controller',
         ),
     );
 

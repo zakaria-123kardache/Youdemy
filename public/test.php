@@ -93,6 +93,7 @@ $etudiant1->setPhoto('photo.png');
 $etudiant1->setRole($role);
 
 echo $etudiant1->__toString(); 
+// var_dump($etudiant1);
 
 echo"<br>";
 echo"<br>";
