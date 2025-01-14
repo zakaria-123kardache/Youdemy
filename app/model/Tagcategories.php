@@ -2,9 +2,9 @@
 
 class Tagcategories {
 
-    private int $id ; 
-    private string $name ;
-    private string $description ; 
+    protected  int $id ; 
+    protected  string $name ;
+    protected  string $description ; 
     
     public function __construct(){}
 
