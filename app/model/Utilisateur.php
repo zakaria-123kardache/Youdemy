@@ -5,14 +5,15 @@ class Utilisateur {
 
 
     private Int $id ; 
-    private string $firstname ;
-    private string $lastname ;
-    private string $photo ; 
-    private Role $role ; 
+    private string $firstname ="" ;
+    private string $lastname ="" ;
+    private string $photo ="" ; 
+    private Role $role  ; 
     
     
    public function __construct(){
-   
+    
+      $this->role = new Role();
    }
 
    public function getId($id){

@@ -1,5 +1,6 @@
 <?php
 namespace App\Model;
+
 class Role {
 
     private $id ; 
@@ -7,7 +8,9 @@ class Role {
     private $description ; 
     private $logo ; 
     
-    public function construct (){}
+    public function construct (){
+        
+    }
 
     public static function instance (string $name, string $description, string $logo){
         $instance = new self();
