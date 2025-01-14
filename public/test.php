@@ -8,6 +8,7 @@ use App\Model\Categorie;
 use App\Model\Enseignant;
 use App\Model\Etudiant;
 use App\Model\Role;
+use App\Model\Utilisateur;
 
 echo " am so ahpppy tor un this code ";
 echo"<br>";
@@ -46,12 +47,43 @@ $cour->getEnseignant($enseignant);
 echo $cour->__toString();
 
 // var_dump($cour);
-
+echo"<br>";
+echo"<br>";
 
 echo"=================================================================";
 echo"=================================================================";
 
-$role = new Role();
+$role = Role::instance('admin','role admin','logo.pgn');
+
+$user1 = new Utilisateur();
+$user1->getFirstname('frau');
+$user1->getLastname('Melda');
+$user1->getPhoto('photo.png');
+$user1->getRole($role);
+
+echo $user1->__toString() ;
+
+echo"<br>";
+echo"<br>";
+echo"=================================================================";
+echo"=================================================================";
+
+
+
+$enseignant = new enseignant();
+$enseignant->getFirstname('Herr');
+$enseignant->getLastname('Schneider');
+$enseignant->getPhoto('photo.png');
+$enseignant->getRole($role);
+
+echo $enseignant->__toString();
+
+echo"<br>";
+echo"<br>";
+echo"=================================================================";
+echo"=================================================================";
+
+
 
 $etudiant1 = new Etudiant();
 $etudiant1->setFirstname("herr");
@@ -59,6 +91,12 @@ $etudiant1->setLastname("muller");
 $etudiant1->setPhoto('photo.png');
 $etudiant1->setRole($role);
 
+echo $etudiant1->__toString(); 
+
+echo"<br>";
+echo"<br>";
+echo"=================================================================";
+echo"=================================================================";
 
 
 

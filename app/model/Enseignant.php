@@ -23,8 +23,10 @@ class Enseignant extends Utilisateur {
     }
 
     public function __toString()
+
     {
-        return "Eenseignat : ".$this-> setFirstname()." ".$this->setLastname();
+        // return "Eenseignat : ".$this-> setFirstname()." ".$this->setLastname();
+        return parent:: __toString();
     }
     
 }

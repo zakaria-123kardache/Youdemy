@@ -4,7 +4,7 @@ namespace App\Model;
 class Utilisateur {
 
 
-    private Int $id ; 
+    private Int $id =0; 
     private string $firstname ="" ;
     private string $lastname ="" ;
     private string $photo ="" ; 
@@ -12,7 +12,7 @@ class Utilisateur {
     
     
    public function __construct(){
-    
+
       $this->role = new Role();
    }
 

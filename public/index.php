@@ -1,22 +1,28 @@
 <?php
 
 require_once('../vendor/autoload.php');
-use App\Model\Tags;
 
-// echo " am so ahpppy tor un this code ";
-
-// // require_once('../model/TagCategories.php');
-
-// echo"<br>";
-// echo"<br>";
-
-// $tag = Tags::instanceWithNameDescriptionLogo("sceinece","this is my science","logo.php");
+require_once('../public/index.php');
+require_once('../public/test.php');
 
 
-// var_dump($tag);
+$route = isset($_GET['route']) ? $_GET['route'] : 'index';
+
+switch ($route) {
+
+    case 'index':
+        echo " am in index";
+        break;
+
+    case 'test':
+        echo " am in page test";
+        break;
+
+    default:
+        echo "404";
+        break;
+}
 
 
 
-
-
-
+echo"======================";
