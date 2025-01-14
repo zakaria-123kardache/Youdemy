@@ -1,6 +1,7 @@
 <?php
 
-require_once('./app/model/TagCategories.php');
+// require_once('../Youdemy/app/model/Tagcategories.php');
+namespace App\Model ; 
 
 class Categorie extends Tagcategories {
 

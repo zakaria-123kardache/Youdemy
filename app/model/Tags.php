@@ -1,5 +1,7 @@
 <?php
-require_once('./app/model/TagCategories.php');
+namespace App\Model; 
+// require_once('./app/model/TagCategories.php');
+
 
 class Tags extends Tagcategories {
     private string $logo ;
@@ -19,8 +21,8 @@ class Tags extends Tagcategories {
 
     public static function instanceWithNameDescriptionLogo(string $name, string $description , string $logo){
         $instance = new self ();
-        $instance->name = $name ; 
-        $instance->description = $description ; 
+        $instance->setName($name) ; 
+        $instance->setDescription($description); 
         $instance->logo = $logo ; 
 
         return $instance ; 

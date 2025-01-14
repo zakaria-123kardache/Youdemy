@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Model;
 class Role {
 
     private $id ; 

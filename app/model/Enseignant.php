@@ -1,8 +1,7 @@
-
-
 <?php
 
-require_once('./app/model/Utilisateur.php');
+    namespace App\Model;
+// require_once('./app/model/Utilisateur.php');
 
 class Enseignant extends Utilisateur {
 

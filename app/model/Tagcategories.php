@@ -1,30 +1,32 @@
 <?php
 
+namespace App\Model;
+
 class Tagcategories {
 
-    protected  int $id ; 
-    protected  string $name ;
-    protected  string $description ; 
+    private int $id  ; 
+    private string $name ;
+    private string $description ; 
     
     public function __construct(){}
 
-    public function getId (int $îd):void{
+    public function setId (int $îd):void{
         $this->id = $îd ; 
     }
-    public function getName (string $name):void{
+    public function setName (string $name):void{
         $this->name = $name ; 
     }
-    public function getDescription (string $description):void{
+    public function setDescription (string $description):void{
         $this->description = $description ; 
     }
 
-    public function setId() : int{
+    public function getId(): int{
         return $this->id ;  
     }
-    public function setName() : string{
+    public function getName(): string{
         return $this->name ;  
     }
-    public function setDescription() : string{
+    public function getDescription() : string{
         return $this->description ;  
     }
 

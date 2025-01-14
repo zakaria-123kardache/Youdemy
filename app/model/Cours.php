@@ -1,6 +1,5 @@
 <?php
-
-
+namespace App\Model;
 
 class Cours {
     private int $id ; 

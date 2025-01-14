@@ -1,6 +1,7 @@
 <?php
 
-include_once('./app/model/Utilisateur.php');
+// include_once('./app/model/Utilisateur.php');
+namespace App\Model;
 
 class Etudiant extends Utilisateur {
 

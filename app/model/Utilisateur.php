@@ -1,6 +1,9 @@
 <?php
+namespace App\Model;
 
 class Utilisateur {
+
+
     private Int $id ; 
     private string $firstname ;
     private string $lastname ;

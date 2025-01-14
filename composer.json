@@ -1,0 +1,9 @@
+{
+    "name": "youcode/youdemy",
+    "autoload": {
+        "psr-4": {
+            "App\\Model\\": "app/model/"
+        }
+    },
+    "require": {}
+}
