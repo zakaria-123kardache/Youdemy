@@ -15,6 +15,9 @@ class Etudiant extends Utilisateur {
 
     }
 
-    
+    public function __toString()
+    {
+        return parent:: __toString();
+    }
 }
 

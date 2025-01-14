@@ -45,4 +45,14 @@ class Role {
         return $this->logo ; 
     }
 
+    public function __toString()
+    {
+        $id = $this->id ?? 0 ; 
+        $name = $this->name ?? "";
+        $description = $this-> description ?? "";
+        $logo = $this-> logo ?? "";
+
+        return "(role) => id : " .$id." ,(role) => name : ".$name." , (role) => description : ".$description." ,(role) => logo :".$logo ;
+    }
+
 }
