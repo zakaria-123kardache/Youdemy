@@ -11,7 +11,9 @@ class Utilisateur {
     private Role $role ; 
     
     
-   public function __construct(){}
+   public function __construct(){
+   
+   }
 
    public function getId($id){
     $this->id = $id ; 
@@ -25,7 +27,7 @@ class Utilisateur {
    public function getPhoto(string $photo) : void {
     $this->photo = $photo ; 
    }
-   public function getRole(string $role): void{
+   public function getRole(Role $role): void{
     $this->role = $role ; 
    }
 

@@ -21,5 +21,10 @@ class Enseignant extends Utilisateur {
     public function accesStatiquefunction (){
 
     }
+
+    public function __toString()
+    {
+        return "Eenseignat : ".$this-> setFirstname()." ".$this->setLastname();
+    }
     
 }

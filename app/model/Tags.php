@@ -29,4 +29,10 @@ class Tags extends Tagcategories {
 
     }
 
+    public function __toString()
+    {
+        parent::__toString()." (logo) => ".$this->logo ;  
+    }
+    
+
 }

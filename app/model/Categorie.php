@@ -8,6 +8,22 @@ class Categorie extends Tagcategories {
     public function __construct(){}
 
     
+    public static function instanceNameDescription(string $name , string $description){
 
+        $instance = new self ();
+
+        $instance->setName($name) ;
+        $instance->setDescription($description); 
+
+        return $instance ; 
+
+    }
+    public function __toString()
+    {
+        // return "(Categorie)=> id :".$this->id."(categorie) => name :".$this->name.
+        // "(categorie) => description :".$this->description ; 
+
+        return parent::__toString();
+    }
 
 }

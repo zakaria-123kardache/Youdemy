@@ -87,6 +87,15 @@ class Cours {
     public function setEnseignant() : Enseignant {
         return $this->enseignant;
     }
+
+
+    public function __toString()
+    {
+        return "(Cour) => id : ". $this->id. ",cour name :".$this->name.
+        ",cour description : ".$this->description.",cour photo : ".$this->photo.
+        ",cour contenu : ".$this->contenu."cour tags". implode(", ",$this->tags)."cour categorie : ".
+        $this->categorie.", cour enseignant : ".$this->enseignant ;
+    }
     
 }
 

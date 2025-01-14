@@ -45,7 +45,4 @@ class Role {
         return $this->logo ; 
     }
 
-
-
-
 }
