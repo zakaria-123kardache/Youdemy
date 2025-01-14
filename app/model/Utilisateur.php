@@ -46,6 +46,11 @@ class Utilisateur {
    public function setRole() :Role {
     return $this-> role;
    }
-   
+
+
+   public function __toString()
+   {
+        return "(user) => id : ".$this->id." ,(user) => firstname : ".$this->firstname." , (user) => lastname : ".$this->lastname." ,(user) => photo :".$this->photo." ,(user) => role :".$this->role ;
+}
 
 }

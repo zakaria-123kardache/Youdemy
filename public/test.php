@@ -6,7 +6,8 @@ use App\Model\Tags;
 use App\Model\Cours;
 use App\Model\Categorie;
 use App\Model\Enseignant;
- 
+use App\Model\Etudiant;
+use App\Model\Role;
 
 echo " am so ahpppy tor un this code ";
 echo"<br>";
@@ -45,6 +46,20 @@ $cour->getEnseignant($enseignant);
 echo $cour->__toString();
 
 // var_dump($cour);
+
+
+echo"=================================================================";
+echo"=================================================================";
+
+$role = new Role();
+
+$etudiant1 = new Etudiant();
+$etudiant1->setFirstname("herr");
+$etudiant1->setLastname("muller");
+$etudiant1->setPhoto('photo.png');
+$etudiant1->setRole($role);
+
+
 
 
 
