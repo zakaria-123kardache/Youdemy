@@ -9,7 +9,7 @@ use App\Model\Enseignant;
 use App\Model\Etudiant;
 use App\Model\Role;
 use App\Model\Utilisateur;
-use App\Http\SignUpForm;
+use App\http\SignUpForm;
 
 echo " am so ahpppy tor un this code ";
 echo"<br>";
@@ -103,9 +103,7 @@ echo"=================================================================";
 
 
 
-
 $register = SignUpForm::instanceWithAllArgs("dfg","dfg","dfg","dfg","dfg");
-
 
 var_dump($register);
 

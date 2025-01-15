@@ -3,16 +3,16 @@ namespace App\Model;
 
 class Utilisateur {
 
-
-    private Int $id =0; 
+    private Int $id = 0; 
     private string $firstname ="" ;
     private string $lastname ="" ;
+    private string $email ="" ;
+    private string $password ="" ;
     private string $photo ="" ; 
-    private Role $role  ; 
-    
+    private Role $role ; 
     
    public function __construct(){
-
+      
       $this->role = new Role();
    }
 
@@ -31,6 +31,12 @@ class Utilisateur {
    public function getRole(Role $role): void{
     $this->role = $role ; 
    }
+   public function getEmail(string $email): void{
+    $this->email = $email ; 
+   }
+   public function getPassword(string $password): void{
+    $this->password = $password ; 
+   }
 
    public function setId() :string {
     return $this-> id;
@@ -44,6 +50,12 @@ class Utilisateur {
    public function setPhoto() :string {
     return $this-> photo;
    }
+   public function setEmail() :string {
+    return $this-> email;
+   }
+   public function setPassword() :string {
+    return $this-> password;
+   }
    public function setRole() :Role {
     return $this-> role;
    }
@@ -51,7 +63,7 @@ class Utilisateur {
 
    public function __toString()
    {
-        return "(user) => id : ".$this->id." ,(user) => firstname : ".$this->firstname." , (user) => lastname : ".$this->lastname." ,(user) => photo :".$this->photo." ,(user) => role :".$this->role ;
-}
+        return "(user) => id : ".$this->id." ,(user) => firstname : ".$this->firstname." , (user) => lastname : ".$this->lastname." ,(user) => photo :".$this->photo." ,(user) => role :".$this->role." , (user) => email : ".$this->email." ,(user) => password :".$this->password;
+   }
 
 }
