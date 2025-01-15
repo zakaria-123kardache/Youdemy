@@ -27,7 +27,7 @@ CREATE Table categories (
     description TEXT
 )
 
-CREATE tags (
+CREATE TABLE tags (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50),
     description TEXT,
