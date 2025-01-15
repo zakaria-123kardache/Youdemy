@@ -16,7 +16,9 @@ CREATE TABLE utilisateurs (
     lastname VARCHAR(50),
     email VARCHAR(50),
     password VARCHAR(50),
-    photo VARCHAR(250)
+    photo VARCHAR(250),
+    role_id INT ,
+    FOREIGN KEY (role_id) REFERENCES roles (id)
 )
 
 CREATE Table categories (
@@ -26,19 +28,31 @@ CREATE Table categories (
 )
 
 CREATE tags (
-    id INT PRIMARY KEY AUTO_INCREMENT ,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50),
     description TEXT,
-    logo VARCHAR(250),
+    logo VARCHAR(250)
 )
 
 CREATE TABLE cours (
-    
+
     id INT PRIMARY KEY AUTO_INCREMENT ,
     name VARCHAR (250),
     description TEXT , 
     contenu VARCHAR (255),
-    photo VARCHAR (255)
+    photo VARCHAR (255),
+    categorie_id INT ,
+    FOREIGN KEY (categorie_id) REFERENCES categories (id)
+
+)
+
+CREATE TABLE tag_cour(
+    
+    tags_id INT ,
+    FOREIGN KEY (tags_id) REFERENCES tags (id),
+    cour_id INT ,
+    FOREIGN KEY (cour_id) REFERENCES cours (id),
+    PRIMARY KEY (tags_id, cour_id)
 
 )
 
