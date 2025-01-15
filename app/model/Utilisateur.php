@@ -66,4 +66,16 @@ class Utilisateur {
         return "(user) => id : ".$this->id." ,(user) => firstname : ".$this->firstname." , (user) => lastname : ".$this->lastname." ,(user) => photo :".$this->photo." ,(user) => role :".$this->role." , (user) => email : ".$this->email." ,(user) => password :".$this->password;
    }
 
+
+   public function AccesCoursCatalogue(){
+
+   }
+
+   public function Recherche (){
+
+   }
+   public function Autontification (){
+      
+   }
+
 }
