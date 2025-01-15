@@ -2,6 +2,7 @@
 
 require_once('../vendor/autoload.php');
 
+use App\core\Database;
 use App\Model\Tags;
 use App\Model\Cours;
 use App\Model\Categorie;
@@ -10,6 +11,9 @@ use App\Model\Etudiant;
 use App\Model\Role;
 use App\Model\Utilisateur;
 use App\http\SignUpForm;
+// use app\core\Database;
+
+
 
 echo " am so ahpppy tor un this code ";
 echo"<br>";
@@ -106,4 +110,11 @@ echo"=================================================================";
 $register = SignUpForm::instanceWithAllArgs("dfg","dfg","dfg","dfg","dfg");
 
 var_dump($register);
+
+
+Database::getInstance();
+// Database::getConnection();
+
+// echo $test;
+// var_dump($test);
 
