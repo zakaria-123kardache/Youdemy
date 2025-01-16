@@ -52,19 +52,59 @@ echo"<br>";
 // echo $cour->__toString();
 
 // // var_dump($cour);
-// echo"<br>";
-// echo"<br>";
+echo"<br>";
+echo"<br>";
 
-// echo"=================================================================";
-// echo"=================================================================";
+echo"=================================================================";
+echo"=================================================================";
 
-$role = Role::instanceWithNameAndDescriptionAndLogo('admin','role admin','logo.pgn');
+$role = Role::instanceWithNameAndDescriptionAndLogo('sss','role sss','logo.pgn');
+
+try {
+    $saverole = $role->create($role);
+    echo " role created secs".$saverole->getId() ;
+} catch (Exception $e ){
+    echo " falied".$e->getMessage();
+}
+
+$rolelist = $role->findAll();
+foreach($rolelist as $r ){
+    echo "role id : {$r->getId()}, role id : {$r->getRoleName()}, role id : {$r->getDescription()}";
+}
+
+if (isset($saverole) && $saverole instanceof Role) {
+    $savedRoleId = $saverole->getId();
+    $saverole = $role->findById($savedRoleId);
+
+    $user = Utilisateur::instance(
+        'kardache',
+        'zakaria',
+        'kardache@mail.ma',
+        'kardachepassword',
+        'kardachepassword',
+        'kardache.png',
+        $saverole
+    );
+
+    try {
+        $saveduser = $user->create($user);
+        echo "User created successfully. ID: " . $saveduser->getId();
+    } catch (Exception $e) {
+        echo "Failed to create user: " . $e->getMessage();
+    }
+} else {
+    echo "Role creation failed " ;
+}
+
+
+
+
 
 // $user = new Utilisateur ();
-$user = Utilisateur::instance('zakaria','zakaria','zakaria','zakaria','zakaria','zakaria',$role);
-$user->setRole($role);
-$user->create($user);
-var_dump($user);
+// $user = Utilisateur::instance('zakaria','zakaria','zakaria','zakaria','zakaria','zakaria',$role);
+// $user->setRole($role);
+// $user->create($user);
+// var_dump($user);
 
 // $user->instance(); 
 
