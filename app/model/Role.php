@@ -85,6 +85,18 @@ class Role {
  
        return $role;
     }
+    
+
+    public function delete (int $id ):int  
+    {
+        $query = "DELETE FROM roles WHERE id = ".$id.";";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
+
+
          
 
     }
