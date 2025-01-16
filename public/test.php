@@ -66,8 +66,6 @@ $user->setRole($role);
 $user->create($user);
 var_dump($user);
 
-
-
 // $user->instance(); 
 
 

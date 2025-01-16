@@ -2,6 +2,7 @@
 namespace App\Model;
 
 use App\core\Database;
+use PDO;
 
 class Role {
     private int $id=0;
@@ -96,7 +97,13 @@ class Role {
         return $stmt->rowCount();
     }
 
+    public function findAll():array{
+        $query = "SELECT *FROM utilisateurs";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->execute();
 
-         
+        return $stmt->fetchAll(PDO::FETCH_CLASS, Utilisateur::class);
+
+    }
 
     }
