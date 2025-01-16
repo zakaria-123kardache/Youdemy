@@ -8,8 +8,8 @@ class Role {
     private $description ; 
     private $logo ; 
     
-    public function construct (){
-        
+    public function construct (string $name){
+        $this->name = $name ; 
     }
 
     public static function instance (string $name, string $description, string $logo){
