@@ -18,6 +18,7 @@ use App\http\SignUpForm;
 echo " am so ahpppy tor un this code ";
 echo"<br>";
 echo " am so ahpppy tor un this code ";
+echo " am so ahpppy tor un this code ";
 
 // require_once('../model/TagCategories.php');
 
@@ -105,9 +106,10 @@ echo"=================================================================";
 echo"=================================================================";
 
 
+$object = new Utilisateur();
+var_dump($object);
 
-
-$register = SignUpForm::instanceWithAllArgs("dfg","dfg","dfg","dfg","dfg");
+// $register = SignUpForm::instanceWithAllArgs("dfg","dfg","dfg","dfg","dfg");
 
 var_dump($register);
 

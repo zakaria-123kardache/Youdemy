@@ -5,9 +5,9 @@ USE youdemy ;
 
 CREATE TABLE roles (
     id INT PRIMARY KEY AUTO_INCREMENT , 
-    name VARCHAR(50) UNIQUE, 
-    description TEXT , 
-    logo VARCHAR(255)
+    rolename VARCHAR(50) UNIQUE, 
+    roledescription TEXT , 
+    rolelogo VARCHAR(255)
 )
 
 CREATE TABLE utilisateurs (

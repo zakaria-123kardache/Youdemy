@@ -2,60 +2,70 @@
 namespace App\Model;
 
 class Role {
+    private int $id;
+    private string $role_name="";
+    private string $role_description = "";
+    private string $logo = "";
 
-    private $id ; 
-    private $name ;
-    private $description ; 
-    private $logo ; 
-    
-    public function construct (string $name){
-        $this->name = $name ; 
-    }
+    public function __construct () {}
 
-    public static function instance (string $name, string $description, string $logo){
+    public static function instanceWithNameAndDescriptionAndLogo(string $name, string $description, string $logo) {
         $instance = new self();
-        $instance-> name =$name ; 
-        $instance-> description =$description ;
-        $instance-> logo = $logo ;  
-        return $instance ; 
-    } 
+        $instance->role_name = $name;
+        $instance->role_description = $description;
+        $instance->logo = $logo;
 
-    public function getId (int $id){
-        $this-> $this-> id = $id ;
-    } 
-    public function getName (int $name){
-        $this-> $this-> name = $name ;
-    } 
-    public function getDescription (int $description){
-        $this-> $this -> description = $description ;
-    } 
-    public function getLogo (int $logo){
-        $this-> $this -> logo = $logo ;
-    } 
-
-
-    public function setId () :int{
-        return $this->id;  
-    }
-    public function setName() :string{
-        return $this->name ;
+        return $instance;
     }
 
-    public function setdescription() :string{
-        return $this->description ; 
-    }
-    public function setLogo () :string{
-        return $this->logo ; 
-    }
+    public static function instanceWithName(string $name): Role {
+        $instance = new self();
 
-    public function __toString()
-    {
-        $id = $this->id ?? 0 ; 
-        $name = $this->name ?? "";
-        $description = $this-> description ?? "";
-        $logo = $this-> logo ?? "";
+        $instance->role_name = $name;
 
-        return "(role) => id : " .$id." ,(role) => name : ".$name." , (role) => description : ".$description." ,(role) => logo :".$logo ;
+        return $instance;
     }
 
+    public function setId(int $id): void {
+        $this->id = $id;
+    }
+
+    public function setRoleName(string $role_name) : void {
+        $this->role_name = $role_name;
+    }
+
+    public function setDescription(string $description) : void {
+        $this->role_description = $description;
+    }
+
+    public function setLogo(string $logo): void {
+        $this->logo = $logo;
+    }
+
+    public function getId(): int {
+        return $this->id;
+    }
+
+    public function getRoleName() : string {
+        return $this->role_name;
+    }
+
+    public function getDescription(): string {
+        return $this->role_description;
+    }
+
+    public function getLogo(): string {
+        return $this->logo;
+    }
+
+    public function __toString() {
+        $id = $this->id ?? 0;
+        $name = $this->role_name ?? "";
+        $description = $this->role_description ?? "";
+        $logo = $this->logo ?? "";
+
+        return "(Role) => id : " . $id . " , name : " . $name . " , description : " . $description . " , logo : " . $logo;
+    }
+
+    
 }
