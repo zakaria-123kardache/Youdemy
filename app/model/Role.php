@@ -98,12 +98,23 @@ class Role {
     }
 
     public function findAll():array{
-        $query = "SELECT *FROM utilisateurs";
+        $query = "SELECT *FROM roles";
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_CLASS, Utilisateur::class);
 
+    }
+
+
+    public function findById(int $id):Role 
+    {
+        $query = "SELECT * FROM roles WHERE id = ".$id;
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchObject(Utilisateur::class);
+        
     }
 
     }
