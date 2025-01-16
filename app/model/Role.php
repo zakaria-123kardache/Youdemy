@@ -110,6 +110,19 @@ class Role
         return $stmt->rowCount();
     }
 
+    public function update (Role $role):Role
+    {
+        $query = "UPDATE roles SET rolename = '"
+        .$role->getRoleName() ."', roledescription ='"
+        .$role->getDescription()."', rolelogo ='"
+        .$role->getLogo(). ";";
+
+        $statement = Database::getInstance()->getConnection()->prepare($query);
+        $statement->execute();
+  
+        return $role;
+    }
+
     public function findAll(): array
     {
         $query = "SELECT * FROM roles";
