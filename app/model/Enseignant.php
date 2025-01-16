@@ -6,6 +6,11 @@
 class Enseignant extends Utilisateur {
 
 
+    public static function intance (){
+        
+    }
+
+
     public function ajoutCour(){
 
     }
@@ -22,11 +27,11 @@ class Enseignant extends Utilisateur {
 
     }
 
-    public function __toString()
+    // public function __toString()
 
-    {
-        // return "Eenseignat : ".$this-> setFirstname()." ".$this->setLastname();
-        return parent:: __toString();
-    }
+    // {
+    //     return "Eenseignat : ".$this-> setFirstname()." ".$this->setLastname();
+    //     return parent:: __toString();
+    // }
     
 }

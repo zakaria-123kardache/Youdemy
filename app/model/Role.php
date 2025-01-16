@@ -1,8 +1,10 @@
 <?php
 namespace App\Model;
 
+use App\core\Database;
+
 class Role {
-    private int $id;
+    private int $id=0;
     private string $role_name="";
     private string $role_description = "";
     private string $logo = "";
@@ -58,14 +60,31 @@ class Role {
         return $this->logo;
     }
 
-    public function __toString() {
-        $id = $this->id ?? 0;
-        $name = $this->role_name ?? "";
-        $description = $this->role_description ?? "";
-        $logo = $this->logo ?? "";
+    // public function __toString() {
+    //     $id = $this->id ?? 0;
+    //     $name = $this->role_name ?? "";
+    //     $description = $this->role_description ?? "";
+    //     $logo = $this->logo ?? "";
 
-        return "(Role) => id : " . $id . " , name : " . $name . " , description : " . $description . " , logo : " . $logo;
+    //     return "(Role) => id : " . $id . " , name : " . $name . " , description : " . $description . " , logo : " . $logo;
+    // }
+
+
+    public function create(Role $role):Role
+    {
+       $query = "INSERT INTO utilisateurs (firstname, lastname, email, password, photo, role_id) VALUES ('"
+          . $role->getRoleName() . "', '"
+          . $role->getDescription() . "', '"
+          . $role->getLogo() . ");";
+          
+ 
+       $stmt = Database::getInstance()->getConnection()->prepare($query);
+       $stmt->execute();
+ 
+       $role->setId(Database::getInstance()->getConnection()->lastInsertId());
+ 
+       return $role;
     }
+         
 
-    
-}
+    }
