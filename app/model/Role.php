@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\core\Database;
+use Exception;
 use PDO;
 
 class Role
@@ -110,18 +111,27 @@ class Role
         return $stmt->rowCount();
     }
 
-    public function update (Role $role):Role
+    public function update(Role $role): Role
     {
-        $query = "UPDATE roles SET rolename = '"
-        .$role->getRoleName() ."', roledescription ='"
-        .$role->getDescription()."', rolelogo ='"
-        .$role->getLogo(). ";";
+        $rolename = $role->getRoleName();
+        $roledescription = $role->getDescription();
+        $rolelogo = $role->getLogo();
+        $id = $role->getId();
 
-        $statement = Database::getInstance()->getConnection()->prepare($query);
-        $statement->execute();
-  
+        $query = "UPDATE roles SET rolename = :rolename, roledescription = :roledescription, rolelogo = :rolelogo WHERE id = :id";
+
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+
+        $stmt->bindParam(':rolename', $rolename);
+        $stmt->bindParam(':roledescription', $roledescription);
+        $stmt->bindParam(':rolelogo', $rolelogo);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
         return $role;
     }
+
 
     public function findAll(): array
     {
@@ -129,10 +139,10 @@ class Role
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_CLASS, Role::class); // Fix: Use Role::class instead of Utilisateur::class
+        return $stmt->fetchAll(PDO::FETCH_CLASS, Role::class);
     }
 
-    
+
 
     public function findById(int $id): Role
     {
@@ -140,16 +150,24 @@ class Role
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->execute();
 
-        return $stmt->fetchObject(Role::class);
+        // return $stmt->fetchObject(Role::class);
+        $role = $stmt->fetchObject(Role::class);
+
+        if (!$role) {
+            throw new Exception("Role with ID $id not found.");
+        }
+
+        return $role;
     }
 
-    public function findByName(){
+    public function findByName()
+    {
         $query = "SELECT * FROM roles WHERE rolename = :rolename";
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->bindParam(":rolename", $name);
         $stmt->execute();
 
         $role = $stmt->fetchObject(Role::class);
-        return $role ?:null ;
+        return $role ?: null;
     }
 }

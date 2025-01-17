@@ -186,7 +186,7 @@ class Utilisateur
       return $statement->fetchAll(PDO::FETCH_CLASS, Utilisateur::class);
    }
 
-   public function findById(int $id): Utilisateur
+   public static function findById(int $id): Utilisateur
    {
       $query = "SELECT * FROM utilisateurs WHERE id = " . $id;
 

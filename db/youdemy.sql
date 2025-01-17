@@ -30,8 +30,7 @@ CREATE Table categories (
 CREATE TABLE tags (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50),
-    description TEXT,
-    logo VARCHAR(250)
+    description TEXT
 )
 
 CREATE TABLE cours (

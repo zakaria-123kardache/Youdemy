@@ -58,43 +58,117 @@ echo"<br>";
 echo"=================================================================";
 echo"=================================================================";
 
-$role = Role::instanceWithNameAndDescriptionAndLogo('sss','role sss','logo.pgn');
+// $role = Role::instanceWithNameAndDescriptionAndLogo('ssss','role sss','logo.pgn');
+// $role1 = Role::instanceWithNameAndDescriptionAndLogo('kkkkk','role sss','logo.pgn');
 
-try {
-    $saverole = $role->create($role);
-    echo " role created secs".$saverole->getId() ;
-} catch (Exception $e ){
-    echo " falied".$e->getMessage();
-}
+// try {
+//     $saverole = $role->create($role);
+//     echo " role created secs".$saverole->getId() ;
+// } catch (Exception $e ){
+//     echo " falied".$e->getMessage();
+// }
 
-$rolelist = $role->findAll();
-foreach($rolelist as $r ){
-    echo "role id : {$r->getId()}, role id : {$r->getRoleName()}, role id : {$r->getDescription()}";
-}
+// try {
+//     $saverole = $role1->create($role1);
+//     echo " role created secs".$saverole->getId() ;
+// } catch (Exception $e ){
+//     echo " falied".$e->getMessage();
+// }
 
-if (isset($saverole) && $saverole instanceof Role) {
-    $savedRoleId = $saverole->getId();
-    $saverole = $role->findById($savedRoleId);
+// $rolelist = $role->findAll();
+// foreach($rolelist as $r ){
+//     echo "role id : {$r->getId()}, role id : {$r->getRoleName()}, role id : {$r->getDescription()}";
+// }
 
-    $user = Utilisateur::instance(
-        'kardache',
-        'zakaria',
-        'kardache@mail.ma',
-        'kardachepassword',
-        'kardachepassword',
-        'kardache.png',
-        $saverole
-    );
 
-    try {
-        $saveduser = $user->create($user);
-        echo "User created successfully. ID: " . $saveduser->getId();
-    } catch (Exception $e) {
-        echo "Failed to create user: " . $e->getMessage();
-    }
-} else {
-    echo "Role creation failed " ;
-}
+// echo"<br>";
+// echo"<br>";
+
+// echo"=================================================================";
+// echo"=================================================================";
+
+// try {
+//     $role = $role-> findById(86);
+//     if ($role instanceof Role){
+//         $role->setRoleName('update admin');
+//         $role->setDescription('update des');
+//         $role->setLogo('updateLogo');
+
+//         $updateRole = $role->update($role);
+
+//         echo "role update ";
+//         echo "ID ".$updateRole->getId();
+//         echo "Is ".$updateRole->getRoleName();
+//         echo "ID ".$updateRole->getDescription();
+//         echo "ID ".$updateRole->getLogo();
+        
+
+//     }
+// }catch (Exception $e) {
+//     echo "Failed to update role: " . $e->getMessage() . PHP_EOL;
+// }
+
+
+// // try {
+// //     $roledalete = 1;
+// //     $deleterows = $role-> delete($roledalete);
+
+
+// //     if( $deleterows > 0){
+// //         echo "roleid delete ";
+// //     }else {
+// //         echo "roleid non  non delete "; 
+// //     }
+
+// // }catch (Exception $e) {
+// //     echo "Failed to delete role: " . $e->getMessage() ;
+// // }
+
+
+
+
+// if (isset($saverole) && $saverole instanceof Role) {
+//     $savedRoleId = $saverole->getId();
+//     $saverole = $role->findById($savedRoleId);
+
+//     $user = Utilisateur::instance(
+//         'kardache',
+//         'zakaria',
+//         'kardache@mail.ma',
+//         'kardachepassword',
+//         'kardachepassword',
+//         'kardache.png',
+//         $saverole
+//     );
+
+//     try {
+//         $saveduser = $user->create($user);
+//         echo "User created successfully. ID: " . $saveduser->getId();
+//     } catch (Exception $e) {
+//         echo "Failed to create user: " . $e->getMessage();
+//     }
+// } else {
+//     echo "Role creation failed " ;
+// }
+
+
+// try {
+//     $user = Utilisateur::findById(1);  
+
+//     if ($user instanceof Utilisateur) {
+//         $user->setFirstname('up date');
+//         $user->setLastname('up date');
+//         $user->setEmail('up date');
+//         $user->setPassword('up date');
+//         $user->setPhoto('up date');
+
+//         $updatedUser = $user->update($user);  
+//         echo "Updated user with ID: " . $updatedUser->getId() . PHP_EOL;
+//     }
+// } catch (Exception $e) {
+//     echo "Failed to update user: " . $e->getMessage();
+// }
+
 
 
 
@@ -175,3 +249,30 @@ if (isset($saverole) && $saverole instanceof Role) {
 // private string $role_name="";
 // private string $role_description = "";
 // private string $logo = "";
+
+
+
+
+echo"<br>";
+echo"<br>";
+
+echo"=================================================================";
+echo"=================================================================";
+
+$categorie = new Categorie ; 
+$categorie->setId(1);
+
+$enseignant = new Enseignant();
+$enseignant->setId(1);
+
+$cour = new Cours();
+$cour->setName('CRUD');
+$cour->setDescription('CRUD.');
+$cour->setContenu('CRUD');
+$cour->setPhoto('CRUD.ppg');
+$cour->setCategorie($categorie);
+$cour->setEnseignant($enseignant);
+
+$createdcours = $cour->create($cour);
+
+echo " created" .$createdcours->getId();
