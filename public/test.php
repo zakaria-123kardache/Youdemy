@@ -271,7 +271,7 @@ $cour->setDescription('CRUD.');
 $cour->setContenu('CRUD');
 $cour->setPhoto('CRUD.ppg');
 $cour->setCategorie($categorie);
-$cour->setEnseignant($enseignant);
+// $cour->setEnseignant($enseignant);
 
 $createdcours = $cour->create($cour);
 

@@ -2,6 +2,7 @@
 namespace App\Model;
 
 use App\core\Database;
+use Exception;
 use PDO;
 
 class Cours {
@@ -11,8 +12,9 @@ class Cours {
     private string $photo =''; 
     private string $contenu =''; 
     private array $tags = [] ; 
-    private ?Categorie $categorie = null; 
-    private ?Enseignant $enseignant = null; 
+    private Categorie $categorie ; 
+    private Enseignant $enseignant ; 
+     
     
 
     public function __construct(){}
@@ -60,7 +62,7 @@ class Cours {
         return $this->tags ;
     }
 
-    public function getCategorie() : ?Categorie
+    public function getCategorie() : Categorie
     {
         return $this->categorie ;
     }
@@ -117,25 +119,116 @@ class Cours {
 
 
 
-    public function create(Cours $cour): Cours
-{
-    $query = "INSERT INTO cours (name, description, contenu, photo, categorie_id) 
-              VALUES (:name, :description, :contenu, :photo, :categorie_id)";
+//     public function create(Cours $cour): Cours
+// {
+    
+//     $query = "INSERT INTO cours (name, description, contenu, photo, categorie_id) 
+//               VALUES (:name, :description, :contenu, :photo, :categorie_id)";
 
+    
+//     $stmt = Database::getInstance()->getConnection()->prepare($query);
+
+//     $stmt->bindParam(':name', $cour->getName());
+//     $stmt->bindParam(':description', $cour->getDescription());
+//     $stmt->bindParam(':contenu', $cour->getContenu());
+//     $stmt->bindParam(':photo', $cour->getPhoto());
+//     $stmt->bindParam(':categorie_id', $cour->getCategorie()->getId(), PDO::PARAM_INT );
+//     // $stmt->bindParam(':categorie_id', $cour->getId(), PDO::PARAM_INT);
+
+//     $stmt->execute();
+//     $cour->setId(Database::getInstance()->getConnection()->lastInsertId());
+
+//     return $cour;
+// }
+
+
+public function create(Cours $cours):Cours{
+
+    $query = "INSERT INTO cours (name, description, contenu, photo, categorie_id)
+    VALUES('".$cours->getName()."' ,'"
+    .$cours->getDescription()."' , '"
+    .$cours->getContenu()."' ,'"
+    .$cours->getPhoto()."' ,'"
+    .$cours->getCategorie()->getId()."') ";
+
+    $stmt = Database::getInstance()->getConnection()->prepare($query);
+    $stmt->execute();
+
+    $cours->setId(Database::getInstance()->getConnection()->lastInsertId());
+
+    return $cours;
+}
+
+
+public function delete (int $id ):int 
+{
+    $query = "DELETE FROM cours WHERE id =".$id .";";
+    $stmt = Database::getINstance()->getConnection()->prepare($query);
+    $stmt->execute();
+
+    return $stmt->rowCount();
+}
+
+
+public function update(Cours $cours):Cours
+{
+
+    $name = $cours->getName();
+    $description = $cours->getDescription();
+    $contenu = $cours->getContenu();
+    $photo = $cours->getPhoto();
+    $id = $cours->getId();
+
+    $query = "UPDATE cours SET name = :name, description = :description ,contenu =:contenu ,photo = :photo WHERE id=:id";
 
     $stmt = Database::getInstance()->getConnection()->prepare($query);
 
-    $stmt->bindParam(':name', $cour->getName());
-    $stmt->bindParam(':description', $cour->getDescription());
-    $stmt->bindParam(':contenu', $cour->getContenu());
-    $stmt->bindParam(':photo', $cour->getPhoto());
-    $stmt->bindParam(':categorie_id', $cour->getCategorie()->getId());
-    // $stmt->bindParam(':categorie_id', $categorie->getId(), PDO::PARAM_INT);
+    $stmt->bindParam(':name',$name);
+    $stmt->bindParam(':description',$description);
+    $stmt->bindParam(':contenu',$contenu);
+    $stmt->bindParam(':photo',$photo);
+    $stmt->bindParam(':id',$id,PDO::PARAM_INT);
 
     $stmt->execute();
-    $cour->setId(Database::getInstance()->getConnection()->lastInsertId());
+    return $cours ; 
 
-    return $cour;
+}
+
+public function findAll():array{
+    $query = "SELECT * FROM cours";
+    $stmt = Database::getInstance()->getConnection()->prepare($query);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_CLASS, Cours::class);
+}
+
+public function findById(int $id):Cours{
+
+    $query = "SELECT * FROM cours WHERE id = ". $id;
+
+    $stmt = Database::getInstance()->getConnection()->prepare($query);
+    $stmt->execute();
+
+    $cours = $stmt->fetchObject(Cours::class);
+    if (!$cours){
+        throw new Exception("cours with id $id not found ");
+
+    }
+
+    return $cours ; 
+}
+
+
+public function findByName()
+{
+    $query = "SELECT * FROM cours WHERE name = :name ";
+    $stmt = Database::getInstance()->getConnection()->prepare($query);
+    $stmt->execute();
+
+    $cours = $stmt->fetchObject(Cours::class);
+    return $cours ?: null;
+
 }
 
 

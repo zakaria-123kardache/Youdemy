@@ -154,7 +154,7 @@ class Role
         $role = $stmt->fetchObject(Role::class);
 
         if (!$role) {
-            throw new Exception("Role with ID $id not found.");
+            throw new Exception("Role with ID $id not found");
         }
 
         return $role;
@@ -164,7 +164,7 @@ class Role
     {
         $query = "SELECT * FROM roles WHERE rolename = :rolename";
         $stmt = Database::getInstance()->getConnection()->prepare($query);
-        $stmt->bindParam(":rolename", $name);
+        // $stmt->bindParam(":rolename", $name);
         $stmt->execute();
 
         $role = $stmt->fetchObject(Role::class);

@@ -5,9 +5,9 @@ namespace App\Model;
 class Tagcategories
 {
 
-    private int $id = 0;
-    private string $name ="" ;
-    private string $description ="";
+    protected int $id = 0;
+    protected string $name ="" ;
+    protected string $description ="";
 
     public function __construct() {}
 
