@@ -163,7 +163,7 @@ echo"=================================================================";
 //         $user->setPhoto('up date');
 
 //         $updatedUser = $user->update($user);  
-//         echo "Updated user with ID: " . $updatedUser->getId() . PHP_EOL;
+//         echo "Updated user with ID: " . $updatedUser->getId() ;
 //     }
 // } catch (Exception $e) {
 //     echo "Failed to update user: " . $e->getMessage();
@@ -275,4 +275,7 @@ $cour->setCategorie($categorie);
 
 $createdcours = $cour->create($cour);
 
+
 echo " created" .$createdcours->getId();
+
+

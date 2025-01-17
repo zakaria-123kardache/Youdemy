@@ -11,12 +11,12 @@ class Tags extends Tagcategories {
         parent::__construct();
     }
 
-    public function getLogo(string $logo):void{
-        $this->logo =$logo ; 
+    public function getLogo():string{
+        return $this->logo ; 
     }
 
-    public function setLogo():string{
-        return $this->logo ; 
+    public function setLogo(string $logo):void{
+        $this->logo = $logo ; 
     }
 
     public static function instanceWithNameDescriptionLogo(string $name, string $description , string $logo){
@@ -31,7 +31,7 @@ class Tags extends Tagcategories {
 
     public function __toString()
     {
-        parent::__toString()." (logo) => ".$this->logo ;  
+        return parent::__toString()." (logo) => ".$this->logo ;  
     }
     
 
