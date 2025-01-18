@@ -259,21 +259,29 @@ echo"<br>";
 echo"=================================================================";
 echo"=================================================================";
 
-$categorie = new Categorie ; 
-$categorie->setId(1);
+$categorie = new Categorie() ; 
+$categoriee = new Categorie ;
+// $categoriee->setName('physic'); 
+// $categoriee->setDescription('physic'); 
+
+// $creadedcategorie = $categoriee->create($categoriee);
+// echo " created" .$creadedcategorie->getId();
+// var_dump($categoriee);
+
+$categoriee->setId(8);
 
 $enseignant = new Enseignant();
 $enseignant->setId(1);
 
-$cour = new Cours();
-$cour->setName('CRUD');
-$cour->setDescription('CRUD.');
-$cour->setContenu('CRUD');
-$cour->setPhoto('CRUD.ppg');
-$cour->setCategorie($categorie);
+$cour1 = new Cours();
+$cour1->setName('CRUD');
+$cour1->setDescription('CRUD.');
+$cour1->setContenu('CRUD');
+$cour1->setPhoto('CRUD.ppg');
+$cour1->setCategorie($categoriee);
 // $cour->setEnseignant($enseignant);
 
-$createdcours = $cour->create($cour);
+$createdcours = $cour1->create($cour1);
 
 
 echo " created" .$createdcours->getId();

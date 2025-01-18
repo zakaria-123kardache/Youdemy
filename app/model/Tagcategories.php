@@ -10,9 +10,9 @@ class Tagcategories
 {
 
     protected int $id = 0;
-    protected string $name ="" ;
-    protected string $description ="";
-    protected string $tablename ="tagcategorie";
+    protected string $name = "";
+    protected string $description = "";
+    protected string $tablename = "tagcategorie";
 
     public function __construct() {}
 
@@ -45,19 +45,23 @@ class Tagcategories
 
     public function __toString()
     {
-        return "(Tagcategories)=> id :".$this->id."(Tagcategories) => name :".$this->name.
-        "(Tagcategories) => description :".$this->description ;
+        return "(Tagcategories)=> id :" . $this->id . "(Tagcategories) => name :" . $this->name .
+            "(Tagcategories) => description :" . $this->description;
     }
 
     public function create(): self
     {
+        $name = $this->getName();
+        $description = $this->getDescription();
+
         $query = "INSERT INTO $this->tablename (name, description) 
               VALUES (:name, :description)";
 
         $stmt = Database::getInstance()->getConnection()->prepare($query);
 
+
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':description', $description, PDO::PARAM_INT);
+        $stmt->bindParam(':description', $description);
 
         $stmt->execute();
 
@@ -79,6 +83,9 @@ class Tagcategories
 
     public function update(): bool
     {
+        $name = $this->getName();
+        $description = $this->getDescription();
+        $id = $this->getId();
 
         $query = "UPDATE $this->tablename SET name = :name, description = :description  WHERE id=:id";
 
@@ -99,7 +106,7 @@ class Tagcategories
 
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_CLASS, static ::class);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, static::class);
     }
 
     public function findById(int $id): Cours
@@ -117,7 +124,7 @@ class Tagcategories
 
         return $$tagcategorie;
     }
-    
+
 
     public function findByName(string $name): ?self
     {
@@ -129,9 +136,4 @@ class Tagcategories
         $tagcategorie  = $stmt->fetchObject(static::class);
         return $tagcategorie ?: null;
     }
-
-    
-
-
-
 }
