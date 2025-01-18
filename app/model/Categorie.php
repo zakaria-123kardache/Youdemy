@@ -5,6 +5,9 @@ namespace App\Model ;
 
 class Categorie extends Tagcategories {
 
+    protected string $tablename = 'categories';
+
+
     public function __construct(){
         parent::__construct();
         

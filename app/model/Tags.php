@@ -4,7 +4,9 @@ namespace App\Model;
 
 
 class Tags extends Tagcategories {
+
     private string $logo ;
+    protected string $tablename = 'tags';
     
     public function __construct()
     {
