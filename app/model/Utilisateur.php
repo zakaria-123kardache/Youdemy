@@ -34,6 +34,16 @@ class Utilisateur
 
       return $instance ; 
    }
+   public static function instanceWithEmailAndPassword(string $email, string $password){
+      $instance = new self();
+      
+      $instance->email = $email ; 
+      $instance->password = $password ; 
+
+      return $instance ; 
+   }
+
+
 
    public function getId(): int
    {

@@ -47,4 +47,41 @@ class AuthController {
 
 
     }
-}
+
+    public function SignIn() {
+        $signinForm = SignInForm::instanceWithAllArgs(
+            $_POST['email'],
+            $_POST['password']
+        );
+
+        try {
+            $user = $this->loginUser($signinForm);  
+            $_SESSION['user'] = $user; 
+            exit();
+        } catch (Exception $e) {
+            $_SESSION['error'] = $e->getMessage();
+            exit();
+        }
+    }
+
+    private function loginUser(SignInForm $signinForm) {
+        $user = Utilisateur::instanceWithEmailAndPassword(
+            $signinForm->email,
+            $signinForm->password
+        );
+
+        $user = $this->findUserByEmailAndPassword($user);
+
+        if ($user->getId() == 0) {
+            throw new Exception("Email or password incorrect");
+        }
+
+        return $user;
+    }
+
+    private function findUserByEmailAndPassword(Utilisateur $user) {
+        
+        return $user;  
+    }
+    
+    }
