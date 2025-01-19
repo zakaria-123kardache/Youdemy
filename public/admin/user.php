@@ -27,7 +27,7 @@ foreach ($users as $user) {
 
 
 
-echo $user->getRole()->getRoleName();  
+// echo $user->getRole()->getRoleName();
 
 
 
@@ -80,14 +80,54 @@ if (isset($_GET['delete_id'])) {
   $userId = (int) $_GET['delete_id'];
   $utilisateur = new Utilisateur();
   $deletedRows = $utilisateur->delete($userId);
-  
+
   if ($deletedRows > 0) {
-      header("Location: user.php");
-      exit();
+    header("Location: user.php");
+    exit();
   } else {
-      echo "Error";
+    echo "Error";
   }
 }
+
+
+// editin user 
+
+
+if (isset($_POST['update_user'])) {
+  $userId = (int)$_POST['id'];
+  $firstname = $_POST['firstname'];
+  $lastname = $_POST['lastname'];
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $roleId = (int)$_POST['role'];
+
+  $photo = '';
+  if (!empty($_FILES['photo']['name'])) {
+    $uploadDir = '../../public/admin/img/';
+    $photoName = basename($_FILES['photo']['name']);
+    $photoPath = $uploadDir . $photoName;
+    if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
+      $photo = $photoPath;
+    }
+  }
+
+  $user = new Utilisateur();
+  $role = new Role();
+  $role->setId($roleId);
+  $user->setId($userId);
+  $user->setFirstname($firstname);
+  $user->setLastname($lastname);
+  $user->setEmail($email);
+  $user->setPassword($password);
+  $user->setPhoto($photo);
+  $user->setRole($role);
+
+  $user->update($user);
+
+  header("Location: user.php");
+  exit();
+}
+
 
 
 
@@ -287,7 +327,7 @@ if (isset($_GET['delete_id'])) {
 
 
                   <?php foreach ($users as $user): ?>
-                  <tr>
+                    <tr>
                       <td>
                         <a class="text-heading font-semibold" href="#"><?= $user->getId(); ?> </a>
                       </td>
@@ -327,6 +367,8 @@ if (isset($_GET['delete_id'])) {
                       </td>
 
                       <td class="text-end">
+
+
                         <a href="#"
                           class="btn d-inline-flex btn-sm btn-warning mx-1"
                           data-bs-toggle="modal" data-bs-target="#edituserModal">
@@ -335,21 +377,23 @@ if (isset($_GET['delete_id'])) {
                           </span>
                           Edit
                         </a>
+
+
                         <a href="user.php?delete_id=<?= $user->getId(); ?>" onclick="return confirmDelete(<?= $user->getId(); ?>);">
-    <button type="button" class="btn d-inline-flex btn-sm btn-danger mx-1">
-        <i class="bi bi-trash"></i>
-    </button>
-</a>
+                          <button type="button" class="btn d-inline-flex btn-sm btn-danger mx-1">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </a>
 
                       </td>
                     </tr>
-                    <?php endforeach; ?>
+                  <?php endforeach; ?>
 
-               
 
-                
 
-    
+
+
+
 
 
 
@@ -468,48 +512,40 @@ if (isset($_GET['delete_id'])) {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+
+          <form method="POST" action="user.php">
+            <input type="hidden" name="id" id="edit-id">
             <div class="mb-3">
               <label for="firstname" class="form-label">Firstname</label>
-              <input type="text" class="form-control" id="firstname">
+              <input type="text" class="form-control" id="edit-firstname" name="firstname">
             </div>
-
             <div class="mb-3">
               <label for="lastname" class="form-label">Lastname</label>
-              <input type="lastname" class="form-control" id="lastname">
+              <input type="text" class="form-control" id="edit-lastname" name="lastname">
             </div>
-
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" required>
+              <input type="email" class="form-control" id="edit-email" name="email" required>
             </div>
-
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password">
+              <input type="password" class="form-control" id="edit-password" name="password">
             </div>
-
             <div class="mb-3">
               <label>Photo</label>
-              <input type="file" id="CRedit-photo" class="form-control">
+              <input type="file" id="edit-photo" class="form-control" name="photo">
             </div>
-
-
             <div class="mb-3">
-
-              <select class="form-select" aria-label="GFG Select">
-                <option>Role</option>
-                <option value="GFG1">Admin</option>
-                <option value="GFG2" selected>Etudiant</option>
-                <option value="GFG3">Ensignant</option>
+              <label for="role" class="form-label">Role</label>
+              <select class="form-select" id="edit-role" name="role">
+                <option value="1">Admin</option>
+                <option value="2">Etudiant</option>
+                <option value="3">Enseignant</option>
               </select>
-
             </div>
-
-
-
-            <button type="submit" class="btn btn-primary">submit</button>
+            <button type="submit" class="btn btn-primary" name="update_user">Submit</button>
           </form>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

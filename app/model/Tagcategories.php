@@ -53,15 +53,17 @@ class Tagcategories
     {
         $name = $this->getName();
         $description = $this->getDescription();
+       
 
         $query = "INSERT INTO $this->tablename (name, description) 
-              VALUES (:name, :description)";
+              VALUES (:name, :description )";
 
         $stmt = Database::getInstance()->getConnection()->prepare($query);
 
 
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':description', $description);
+
 
         $stmt->execute();
 

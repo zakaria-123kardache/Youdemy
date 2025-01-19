@@ -24,6 +24,7 @@ CREATE TABLE utilisateurs (
 CREATE Table categories (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR (50),
+    photo VARCHAR (250),
     description TEXT
 )
 
