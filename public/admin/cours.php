@@ -5,6 +5,10 @@ require_once '../../vendor/autoload.php';
 use App\Model\Categorie;
 use App\Model\Cours;
 
+
+$coursInstance = new Cours();
+$cours = $coursInstance->findAll();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $coursname = $_POST['coursname'];
   $courdescription = $_POST['courdescription'];
@@ -41,6 +45,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   header('Location: cours.php');
   exit;
 }
+
+
+
+// editin cours 
+
+
+if (isset($_POST['update_cour'])) {
+  $courid = (int)$_POST['id'];
+  $name = $_POST['name'];
+  $description = $_POST['description'];
+  $contenu = $_POST['contenu'];
+  $categorie = (int)$_POST['categorie'];
+
+  $photo = '';
+  if (!empty($_FILES['photo']['name'])) {
+    $uploadDir = '../../public/admin/img/';
+    $photoName = basename($_FILES['photo']['name']);
+    $photoPath = $uploadDir . $photoName;
+    if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
+      $photo = $photoPath;
+    }
+  }
+
+
+
+  $cour = new Cours();
+  $cour->setName($coursname);
+  $cour->setDescription($courdescription);
+  $cour->setContenu($courcontenu);
+  $cour->setPhoto($photo);
+
+  $categorie = new Categorie();
+  $categorie->setId($courcategorie); 
+  $cour->setCategorie($categorie);
+
+  $cour->update($cour);
+
+  header('Location: cours.php');
+  exit;
+}
+
+
 
 
 
@@ -212,15 +258,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="row justify-content-start">
 
-
+            <?php foreach ($cours as $cour): ?>
               <div class="col-md-4 p-5">
                 <div class="product-card bg-white rounded-4 shadow-sm h-100 position-relative">
                   <span class="badge bg-danger">New</span>
                   <div class="overflow-hidden">
-                    <img src="https://ultahost.com/blog/wp-content/uploads/2023/02/Best-Web-Servers-for-PHP-Development-1024x577.png" class="product-image w-100" alt="Product">
+                    <img src="<?= $cour->getPhoto(); ?>" class="product-image w-100" alt="Product">
                   </div>
                   <div class="p-4">
-                    <h5 class="fw-bold mb-3">Learn mit Mir Php</h5>
+                    <h5 class="fw-bold mb-3"><?= $cour->getName(); ?></h5>
                     <div class="d-flex align-items-center mb-3">
                       <div class="me-2">
                         <i class="fas fa-star text-warning"></i>
@@ -237,7 +283,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <td>
                           <img
                             alt="..."
-                            src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"
+                            src="https://ultahost.com/blog/wp-content/uploads/2023/02/Best-Web-Servers-for-PHP-Development-1024x577.png"
                             class="avatar avatar-sm rounded-circle me-2" />
                         </td>
 
@@ -249,8 +295,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
                     </div>
-                    <p class="text-muted mb-4">Experience crystal clear sound with our premium wireless headphones featuring
-                      noise cancellation.</p>
+                    <p class="text-muted mb-4"><?= $cour->getContenu(); ?></p>
 
                     <div class="d-flex justify-content-between align-items-center">
 
@@ -277,6 +322,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   </div>
                 </div>
               </div>
+              <?php endforeach; ?>
 
 
 
