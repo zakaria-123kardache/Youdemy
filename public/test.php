@@ -253,37 +253,37 @@ echo"=================================================================";
 
 
 
-echo"<br>";
-echo"<br>";
+// echo"<br>";
+// echo"<br>";
 
-echo"=================================================================";
-echo"=================================================================";
+// echo"=================================================================";
+// echo"=================================================================";
 
-$categorie = new Categorie() ; 
-$categoriee = new Categorie ;
-// $categoriee->setName('physic'); 
-// $categoriee->setDescription('physic'); 
+// $categorie = new Categorie() ; 
+// $categoriee = new Categorie ;
+// // $categoriee->setName('physic'); 
+// // $categoriee->setDescription('physic'); 
 
-// $creadedcategorie = $categoriee->create($categoriee);
-// echo " created" .$creadedcategorie->getId();
-// var_dump($categoriee);
+// // $creadedcategorie = $categoriee->create($categoriee);
+// // echo " created" .$creadedcategorie->getId();
+// // var_dump($categoriee);
 
-$categoriee->setId(8);
+// $categoriee->setId(8);
 
-$enseignant = new Enseignant();
-$enseignant->setId(1);
+// $enseignant = new Enseignant();
+// $enseignant->setId(1);
 
-$cour1 = new Cours();
-$cour1->setName('CRUD');
-$cour1->setDescription('CRUD.');
-$cour1->setContenu('CRUD');
-$cour1->setPhoto('CRUD.ppg');
-$cour1->setCategorie($categoriee);
-// $cour->setEnseignant($enseignant);
+// $cour1 = new Cours();
+// $cour1->setName('CRUD');
+// $cour1->setDescription('CRUD.');
+// $cour1->setContenu('CRUD');
+// $cour1->setPhoto('CRUD.ppg');
+// $cour1->setCategorie($categoriee);
+// // $cour->setEnseignant($enseignant);
 
-$createdcours = $cour1->create($cour1);
+// $createdcours = $cour1->create($cour1);
 
 
-echo " created" .$createdcours->getId();
+// echo " created" .$createdcours->getId();
 
 
