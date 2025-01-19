@@ -168,14 +168,15 @@ class Utilisateur
    }
 
    public function delete(int $id): int
-   {
-      $query = "DELETE FROM utilisateurs WHERE id = " . $id . " ;";
+{
+    $query = "DELETE FROM utilisateurs WHERE id = :id";
 
-      $statement = Database::getInstance()->getConnection()->prepare($query);
-      $statement->execute();
+    $statement = Database::getInstance()->getConnection()->prepare($query);
+    $statement->bindParam(':id', $id);
+    $statement->execute();
+    return $statement->rowCount();
+}
 
-      return $statement->rowCount();
-   }
 
    public function update(Utilisateur $user): Utilisateur
    {

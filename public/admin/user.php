@@ -75,6 +75,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
+if (isset($_GET['delete_id'])) {
+
+  $userId = (int) $_GET['delete_id'];
+  $utilisateur = new Utilisateur();
+  $deletedRows = $utilisateur->delete($userId);
+  
+  if ($deletedRows > 0) {
+      header("Location: user.php");
+      exit();
+  } else {
+      echo "Error";
+  }
+}
+
+
+
 
 ?>
 
@@ -319,13 +335,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                           </span>
                           Edit
                         </a>
-                        <a>
-                          <button
-                            type="button"
-                            onclick="showSweetAlert()"
-                            class="btn d-inline-flex btn-sm btn-danger mx-1">
-                            <i class="bi bi-trash"></i></button>
-                        </a>
+                        <a href="user.php?delete_id=<?= $user->getId(); ?>" onclick="return confirmDelete(<?= $user->getId(); ?>);">
+    <button type="button" class="btn d-inline-flex btn-sm btn-danger mx-1">
+        <i class="bi bi-trash"></i>
+    </button>
+</a>
+
                       </td>
                     </tr>
                     <?php endforeach; ?>
