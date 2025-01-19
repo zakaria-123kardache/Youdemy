@@ -15,12 +15,8 @@
   
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
-
-  <!-- <link rel="icon" type="image/png" href="dist/images/favicon/favicon.png" /> -->
 </head>
-<!-- bytewebster.com -->
-<!-- bytewebster.com -->
-<!-- bytewebster.com -->
+
 <body>
 <!-- Dashboard -->
 <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">

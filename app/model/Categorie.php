@@ -91,7 +91,7 @@ class Categorie extends Tagcategories
         
         foreach ($results as $result) {
             $category = new self(); 
-            
+
             foreach ($result as $key => $value) {
                 if ($key === 'photo' && empty($value)) {
                     $value = 'default.jpg';
@@ -107,6 +107,34 @@ class Categorie extends Tagcategories
         }
         
         return $categories;
+    }
+
+
+    public function update(): bool
+    {
+        $name = $this->getName();
+        $description = $this->getDescription();
+        $id = $this->getId();
+        $photo = $this->getPhoto();
+
+        if (!empty($photo)) {
+            $query = "UPDATE $this->tablename SET name = :name, description = :description, photo = :photo WHERE id = :id";
+        } else {
+
+            $query = "UPDATE $this->tablename SET name = :name, description = :description WHERE id = :id";
+        }
+
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        
+        if (!empty($photo)) {
+            $stmt->bindParam(':photo', $photo);
+        }
+
+        return $stmt->execute();
     }
     
 }

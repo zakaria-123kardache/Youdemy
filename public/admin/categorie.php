@@ -9,15 +9,16 @@ $categorieObj = new Categorie();
 $categories = $categorieObj->findAll();
 
 if (!$categories) {
-    $categories = []; 
+    $categories = [];
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['categorie-name'];
-    $description = $_POST['categorie-description'];
+    $name = $_POST['edit-categorie-name'];
+    $description = $_POST['edit-categorie-description'];
+
     $photo = '';
 
-    
+
     if (!empty($_FILES['categorie-photo']['name'])) {
         $uploadDir = '../../public/admin/img/';
         $photoName = basename($_FILES['categorie-photo']['name']);
@@ -38,8 +39,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $categorie->create();
 
-    header('Location: /youdemy/public/admin/categories.php');
+    header('Location: categorie.php');
     exit;
+}
+
+
+
+
+// editin categorie 
+
+
+// PHP handling code
+// PHP code for handling the update
+if (isset($_POST['update_categorie'])) {
+    $id = $_POST['edit-categorie-id'];
+
+    $name = $_POST['edit-categorie-name'];
+    $description = $_POST['edit-categorie-description'];
+
+    $photo = '';
+    if (!empty($_FILES['edit-categorie-photo']['name'])) {
+        $uploadDir = '../../public/admin/img/';
+        $photoName = basename($_FILES['edit-categorie-photo']['name']);
+        $photoPath = $uploadDir . $photoName;
+        if (move_uploaded_file($_FILES['edit-categorie-photo']['tmp_name'], $photoPath)) {
+            $photo = $photoName; // Store just the filename, not the full path
+        }
+    }
+
+    $categorie = new Categorie();
+    $categorie->setId($id);
+    $categorie->setName($name);
+    $categorie->setDescription($description);
+    if (!empty($photo)) {
+        $categorie->setPhoto($photo);
+    }
+
+    $categorie->update();
+    header("Location: categorie.php");
+    exit();
 }
 
 
@@ -166,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="mx-n1">
 
                                     <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1"
-                                    data-bs-toggle="modal" data-bs-target="#creatcategorieModal">
+                                        data-bs-toggle="modal" data-bs-target="#creatcategorieModal">
                                         <span class=" pe-2">
                                             <i class="bi bi-plus"></i>
                                         </span>
@@ -211,55 +249,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="card-header">
                             <h5 class="mb-0">Applications</h5>
                         </div>
-                        
+
 
                         <div class="row g-6 mb-6">
 
-                           <?php foreach ($categories as $categorie): ?>
+                            <?php foreach ($categories as $categorie): ?>
 
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card shadow-sm border-0 h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <img
-                                                    alt="..."
-                                                    src="<?= $categorie->getPhoto();?>"
-                                                    class="avatar avatar-sm rounded-circle me-2" />
-                                                <h5 class="card-title mb-0"><?= $categorie->getName();?></h5>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card shadow-sm border-0 h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <div class="d-flex align-items-center">
+                                                    <img
+                                                        alt="..."
+                                                        src="<?= $categorie->getPhoto(); ?>"
+                                                        class="avatar avatar-sm rounded-circle me-2" />
+                                                    <h5 class="card-title mb-0"><?= $categorie->getName(); ?></h5>
+                                                </div>
+                                                <div class="d-flex">
+
+
+                                                    <a href="#"
+                                                        class="btn d-inline-flex btn-sm btn-warning mx-1"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editcategorieModal"
+                                                       >
+                                                        <span class="pe-2">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </span>
+                                                        Edit
+                                                    </a>
+
+                                                    <a>
+
+                                                        <button
+                                                            type="button"
+                                                            onclick="showSweetAlert()"
+                                                            class="btn d-inline-flex btn-sm btn-danger mx-1">
+                                                            <i class="bi bi-trash"></i></button></a>
+                                                </div>
                                             </div>
-                                            <div class="d-flex">
-                                                <!-- Bouton Éditer -->
-                                                <a
-                                                    href="#"
-                                                    class="btn d-inline-flex btn-sm btn-warning mx-1">
-                                                    <span class="pe-2">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </span>
-                                                    Edit
-                                                </a>
-                                                <!-- Bouton Supprimer -->
-                                                <a>
 
-                                                    <button
-                                                        type="button"
-                                                        onclick="showSweetAlert()"
-                                                        class="btn d-inline-flex btn-sm btn-danger mx-1">
-                                                        <i class="bi bi-trash"></i></button></a>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-muted">
+                                                    <i class="fas fa-book me-1"></i>5 cours
+                                                </span>
+                                                <small class="text-muted">
+                                                    <i class="fas fa-clock me-1"></i>Créé récemment
+                                                </small>
                                             </div>
-                                        </div>
-
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">
-                                                <i class="fas fa-book me-1"></i>5 cours
-                                            </span>
-                                            <small class="text-muted">
-                                                <i class="fas fa-clock me-1"></i>Créé récemment
-                                            </small>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
                             <?php endforeach; ?>
 
@@ -293,43 +334,86 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-     <!-- start Modal creat -->
-  <div class="modal fade" id="creatcategorieModal" tabindex="-1" aria-labelledby="creatcategorieModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="loginModalLabel">Creat New Categorie</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- start Modal creat -->
+        <div class="modal fade" id="creatcategorieModal" tabindex="-1" aria-labelledby="creatcategorieModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">Creat New Categorie</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form method="POST" action="" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="categorie-name" class="form-label">Categorie Name</label>
+                                <input type="text" class="form-control" name="categorie-name" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="categorie-description" class="form-label">Categorie Description</label>
+                                <input type="text" class="form-control" name="categorie-description" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="categorie-photo" class="form-label">Categorie Photo</label>
+                                <input type="file" name="categorie-photo" class="form-control" accept="image/*">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
+        <!-- end Modal Creat -->
 
-        <form method="POST" action="../../public/admin/categorie.php" enctype="multipart/form-data">
-    <div class="mb-3">
-        <label for="categorie-name" class="form-label">Categorie Name</label>
-        <input type="text" class="form-control" name="categorie-name" required>
-    </div>
 
-    <div class="mb-3">
-        <label for="categorie-description" class="form-label">Categorie Description</label>
-        <input type="text" class="form-control" name="categorie-description" required>
-    </div>
+        <!-- start editing Modal  -->
+        <!-- Modal HTML -->
+        <div class="modal fade" id="editcategorieModal" tabindex="-1" aria-labelledby="editcategorieModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editcategorieModalLabel">Edit Categorie</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="edit-categorie-id" id="edit-categorie-id">
 
-    <div class="mb-3">
-        <label for="categorie-photo" class="form-label">Categorie Photo</label>
-        <input type="file" name="categorie-photo" class="form-control" accept="image/*">
-    </div>
+                            <div class="mb-3">
+                                <label for="edit-categorie-name" class="form-label">Categorie Name</label>
+                                <input type="text" class="form-control" name="edit-categorie-name" id="edit-categorie-name" required>
+                            </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+                            <div class="mb-3">
+                                <label for="edit-categorie-description" class="form-label">Categorie Description</label>
+                                <input type="text" class="form-control" name="edit-categorie-description" id="edit-categorie-description" required>
+                            </div>
 
+                            <div class="mb-3">
+                                <label for="edit-categorie-photo" class="form-label">Categorie Photo</label>
+                                <input type="file" name="edit-categorie-photo" class="form-control" accept="image/*">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" name="update_categorie" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end Modal Creat -->
+
+        <!-- Edit button in your categories loop -->
+
+        <!-- end editing modal -->
 
 
 
