@@ -21,7 +21,7 @@ class Utilisateur
    public function __construct() {}
 
 
-   public static function instance(string $firstname, string $lastname, string $email, string $password , string $passwordConfig ,string $photo ,Role $role){
+   public static function instance(string $firstname, string $lastname, string $email, string $password , string $passwordConfig ,string $photo , int $role_id ,Role $role){
       $instance = new self();
       $instance->firstname = $firstname ; 
       $instance->lastname = $lastname ; 
@@ -30,6 +30,7 @@ class Utilisateur
       $instance->passwordConfig = $passwordConfig ; 
       $instance->photo = $photo ;
       $instance->role= $role ;   
+      $instance->role_id= $role_id ;   
 
 
       return $instance ; 
@@ -82,6 +83,10 @@ class Utilisateur
    {
       return $this->role;
    }
+   public function getRoleId(): int
+   {
+      return $this->role_id;
+   }
 
    public function setId(int $id): void
    {
@@ -116,6 +121,10 @@ class Utilisateur
    public function setPasswordConfig(string $passwordConfig): void
    {
       $this->passwordConfig = $passwordConfig;
+   }
+   public function setRoleId(int $role_id): void
+   {
+      $this->role_id = $role_id;
    }
 
    public function setRole(Role $role): void

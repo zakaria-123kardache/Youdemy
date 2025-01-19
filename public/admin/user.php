@@ -13,9 +13,18 @@ $users = $utilisateur->findAll();
 
 
 
-$role = new Role();
-$role->setId($role_id); 
-$user->setRole($role);   
+// $role = new Role();
+// $role->setId($role_id); 
+// $user->setRole($role);   
+
+foreach ($users as $user) {
+  $role_id = $user->getRoleId();
+  $role = new Role();
+  $role->setId($role_id);
+
+  $user->setRole($role);
+}
+
 
 
 echo $user->getRole()->getRoleName();  
@@ -261,8 +270,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   <!--  -->
 
 
-  <tr>
-                    <?php foreach ($users as $user): ?>
+                  <?php foreach ($users as $user): ?>
+                  <tr>
                       <td>
                         <a class="text-heading font-semibold" href="#"><?= $user->getId(); ?> </a>
                       </td>
@@ -318,8 +327,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <i class="bi bi-trash"></i></button>
                         </a>
                       </td>
+                    </tr>
                     <?php endforeach; ?>
-                  </tr>
 
                
 
