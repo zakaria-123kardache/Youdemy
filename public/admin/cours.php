@@ -18,16 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $photo = '';
 
   if (!empty($_FILES['courphoto']['name'])) {
-      $uploadDir = '../../public/admin/img/';
-      $photoName = basename($_FILES['courphoto']['name']);
-      $photoPath = $uploadDir . $photoName;
+    $uploadDir = '../../public/admin/img/';
+    $photoName = basename($_FILES['courphoto']['name']);
+    $photoPath = $uploadDir . $photoName;
 
-      if (move_uploaded_file($_FILES['courphoto']['tmp_name'], $photoPath)) {
-          $photo = $photoPath;
-      } else {
-          echo 'failed to upload img';
-          exit;
-      }
+    if (move_uploaded_file($_FILES['courphoto']['tmp_name'], $photoPath)) {
+      $photo = $photoPath;
+    } else {
+      echo 'failed to upload img';
+      exit;
+    }
   }
 
   $cour = new Cours();
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $cour->setPhoto($photo);
 
   $categorie = new Categorie();
-  $categorie->setId($courcategorie); 
+  $categorie->setId($courcategorie);
   $cour->setCategorie($categorie);
 
   $cour->create($cour);
@@ -49,42 +49,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 // editin cours 
-
-
 if (isset($_POST['update_cour'])) {
-  $courid = (int)$_POST['id'];
-  $name = $_POST['name'];
-  $description = $_POST['description'];
-  $contenu = $_POST['contenu'];
-  $categorie = (int)$_POST['categorie'];
+        $courid = (int)$_POST['id'];
+        $name = $_POST['coursname'];
+        $description = $_POST['courdescription'];
+        $contenu = $_POST['courcontenu'];
+        $categorieId = (int)$_POST['courcategorie'];
 
-  $photo = '';
-  if (!empty($_FILES['photo']['name'])) {
-    $uploadDir = '../../public/admin/img/';
-    $photoName = basename($_FILES['photo']['name']);
-    $photoPath = $uploadDir . $photoName;
-    if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
-      $photo = $photoPath;
-    }
-  }
+        $photo = '';
+        if (!empty($_FILES['photo']['name'])) {
+            $uploadDir = '../../public/admin/img/';
+            $photoName = basename($_FILES['photo']['name']);
+            $photoPath = $uploadDir . $photoName;
+            if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
+                $photo = $photoPath;
+            }
+        }
 
+        $cour = new Cours();
+        $cour->setId($courid);
+        $cour->setName($name);
+        $cour->setDescription($description);
+        $cour->setContenu($contenu);
+        if (!empty($photo)) {
+            $cour->setPhoto($photo);
+        }
 
+        $categorie = new Categorie();
+        $categorie->setId($categorieId);
+        $cour->setCategorie($categorie);
 
-  $cour = new Cours();
-  $cour->setName($coursname);
-  $cour->setDescription($courdescription);
-  $cour->setContenu($courcontenu);
-  $cour->setPhoto($photo);
+        $cour->update($cour);
 
-  $categorie = new Categorie();
-  $categorie->setId($courcategorie); 
-  $cour->setCategorie($categorie);
-
-  $cour->update($cour);
-
-  header('Location: cours.php');
-  exit;
-}
+        header('Location: cours.php');
+        exit;
+      }
 
 
 
@@ -258,70 +257,71 @@ if (isset($_POST['update_cour'])) {
 
             <div class="row justify-content-start">
 
-            <?php foreach ($cours as $cour): ?>
-              <div class="col-md-4 p-5">
-                <div class="product-card bg-white rounded-4 shadow-sm h-100 position-relative">
-                  <span class="badge bg-danger">New</span>
-                  <div class="overflow-hidden">
-                    <img src="<?= $cour->getPhoto(); ?>" class="product-image w-100" alt="Product">
-                  </div>
-                  <div class="p-4">
-                    <h5 class="fw-bold mb-3"><?= $cour->getName(); ?></h5>
-                    <div class="d-flex align-items-center mb-3">
-                      <div class="me-2">
-                        <i class="fas fa-star text-warning"></i>
-                        <i class="fas fa-star text-warning"></i>
-                        <i class="fas fa-star text-warning"></i>
-                        <i class="fas fa-star text-warning"></i>
-                        <i class="fas fa-star-half-alt text-warning"></i>
+              <?php foreach ($cours as $cour): ?>
+                <div class="col-md-4 p-5">
+                  <div class="product-card bg-white rounded-4 shadow-sm h-100 position-relative">
+                    <span class="badge bg-danger">New</span>
+                    <div class="overflow-hidden">
+                      <img src="<?= $cour->getPhoto(); ?>" class="product-image w-100" alt="Product">
+                    </div>
+                    <div class="p-4">
+                      <h5 class="fw-bold mb-3"><?= $cour->getName(); ?></h5>
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="me-2">
+                          <i class="fas fa-star text-warning"></i>
+                          <i class="fas fa-star text-warning"></i>
+                          <i class="fas fa-star text-warning"></i>
+                          <i class="fas fa-star text-warning"></i>
+                          <i class="fas fa-star-half-alt text-warning"></i>
+                        </div>
+
+
+                        <div>
+
+
+                          <td>
+                            <img
+                              alt="..."
+                              src="https://ultahost.com/blog/wp-content/uploads/2023/02/Best-Web-Servers-for-PHP-Development-1024x577.png"
+                              class="avatar avatar-sm rounded-circle me-2" />
+                          </td>
+
+                          <td>
+                            <a class="text-heading font-semibold"> Teacher </a>
+                          </td>
+
+                        </div>
+
+
                       </div>
+                      <p class="text-muted mb-4"><?= $cour->getContenu(); ?></p>
+
+                      <div class="d-flex justify-content-between align-items-center">
+
+                        <a
+                          href="#"
+                          class="btn d-inline-flex btn-sm btn-warning mx-1"
+                          data-bs-toggle="modal" data-bs-target="#editCourseModal">
+                          <span class="pe-2">
+                            <i class="bi bi-pencil"></i>
+                          </span>
+                          Edit
+                        </a>
+
+                        <a>
 
 
-                      <div>
-
-
-                        <td>
-                          <img
-                            alt="..."
-                            src="https://ultahost.com/blog/wp-content/uploads/2023/02/Best-Web-Servers-for-PHP-Development-1024x577.png"
-                            class="avatar avatar-sm rounded-circle me-2" />
-                        </td>
-
-                        <td>
-                          <a class="text-heading font-semibold"> Teacher </a>
-                        </td>
-
+                          <button
+                            type="button"
+                            onclick="showSweetAlert()"
+                            class="btn d-inline-flex btn-sm btn-danger mx-1">
+                            <i class="bi bi-trash"></i></button></a>
                       </div>
 
 
                     </div>
-                    <p class="text-muted mb-4"><?= $cour->getContenu(); ?></p>
-
-                    <div class="d-flex justify-content-between align-items-center">
-
-                      <a
-                        href="#"
-                        class="btn d-inline-flex btn-sm btn-warning mx-1"
-                        data-bs-toggle="modal" data-bs-target="#editcourModal">
-                        <span class="pe-2">
-                          <i class="bi bi-pencil"></i>
-                        </span>
-                        Edit
-                      </a>
-
-                      <a>
-
-                        <button
-                          type="button"
-                          onclick="showSweetAlert()"
-                          class="btn d-inline-flex btn-sm btn-danger mx-1">
-                          <i class="bi bi-trash"></i></button></a>
-                    </div>
-
-
                   </div>
                 </div>
-              </div>
               <?php endforeach; ?>
 
 
@@ -373,102 +373,40 @@ if (isset($_POST['update_cour'])) {
 
   <div class="modal fade" id="creatcourModal" tabindex="-1" aria-labelledby="creatcourModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Creat Cours</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="coursname" class="form-label">cours name</label>
-                        <input type="text" class="form-control" name="coursname" id="name" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="courdescription" class="form-label">description</label>
-                        <input type="text" name="courdescription" class="form-control" id="courdescription" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="courcontenu" class="form-label">contenu</label>
-                        <input type="text" name="courcontenu" class="form-control" id="courcontenu" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Photo</label>
-                        <input type="file" name="courphoto" id="CRedit-photo" class="form-control">
-                    </div>
-
-                    <div class="mb-3">
-                        <select class="form-select" name="courcategorie" required>
-                            <option value="">select categorie </option>
-                            <option value="1">Mathimatik</option>
-                            <option value="2">informatique</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">submit</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-  <!-- end Modal Creat -->
-
-
-
-  <!-- start Modal edit cours  -->
-
-
-  <div class="modal fade" id="editcourModal" tabindex="-1" aria-labelledby="editcourModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-
-          <h5 class="modal-title" id="loginModalLabel">Edit Cours</h5>
-
+          <h5 class="modal-title" id="loginModalLabel">Creat Cours</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form method="POST" action="" enctype="multipart/form-data">
             <div class="mb-3">
-              <label for="name" class="form-label">cours name</label>
-              <input type="text" class="form-control" id="name">
+              <label for="coursname" class="form-label">cours name</label>
+              <input type="text" class="form-control" name="coursname" id="name" required>
             </div>
 
             <div class="mb-3">
-              <label for="description" class="form-label">description</label>
-              <input type="description" class="form-control" id="description">
+              <label for="courdescription" class="form-label">description</label>
+              <input type="text" name="courdescription" class="form-control" id="courdescription" required>
             </div>
 
             <div class="mb-3">
-              <label for="contenu" class="form-label">contenu</label>
-              <input type="text" class="form-control" id="contenu" required>
+              <label for="courcontenu" class="form-label">contenu</label>
+              <input type="text" name="courcontenu" class="form-control" id="courcontenu" required>
             </div>
 
             <div class="mb-3">
               <label>Photo</label>
-              <input type="file" id="CRedit-photo" class="form-control">
+              <input type="file" name="courphoto" id="CRedit-photo" class="form-control">
             </div>
-
 
             <div class="mb-3">
-
-              <select class="form-select" aria-label="GFG Select">
-                <option>Categorie</option>
-                <option value="GFG1">Mathimatik</option>
-                <option value="GFG2" selected>informatique</option>
+              <select class="form-select" name="courcategorie" required>
+                <option value="">select categorie </option>
+                <option value="1">Mathimatik</option>
+                <option value="2">informatique</option>
               </select>
-
             </div>
-
-
 
             <button type="submit" class="btn btn-primary">submit</button>
           </form>
@@ -481,7 +419,64 @@ if (isset($_POST['update_cour'])) {
   </div>
 
 
+  <!-- end Modal Creat -->
+
+
+
+  <!-- start Modal edit cours  -->
+
+
+
+ <!-- Edit Course Modal -->
+<!-- Edit Course Modal -->
+<div class="modal fade" id="editCourseModal" tabindex="-1" aria-labelledby="editCourseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCourseModalLabel">Edit Course</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="cours.php" enctype="multipart/form-data">
+                    <input type="hidden" name="id" id="edit-id">
+                    <div class="mb-3">
+                        <label for="edit-name" class="form-label">Course Name</label>
+                        <input type="text" class="form-control" id="edit-name" name="coursname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-description" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="edit-description" name="courdescription" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-contenu" class="form-label">Content</label>
+                        <input type="text" class="form-control" id="edit-contenu" name="courcontenu" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-photo" class="form-label">Photo</label>
+                        <input type="file" class="form-control" id="edit-photo" name="photo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-categorie" class="form-label">Category</label>
+                        <select class="form-select" id="edit-categorie" name="courcategorie" required>
+                            <option value="">Select Category</option>
+                            <option value="1">Mathimatik</option>
+                            <option value="2">Informatique</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="update_cour">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
   <!-- end Modal edit -->
+
+
+
+
+
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

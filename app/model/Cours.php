@@ -168,14 +168,14 @@ class Cours
 
     public function update(Cours $cours): Cours
     {
-
         $name = $cours->getName();
         $description = $cours->getDescription();
         $contenu = $cours->getContenu();
         $photo = $cours->getPhoto();
         $id = $cours->getId();
+        $categorieId = $cours->getCategorie()->getId();
 
-        $query = "UPDATE cours SET name = :name, description = :description ,contenu =:contenu ,photo = :photo WHERE id=:id";
+        $query = "UPDATE cours SET name = :name, description = :description, contenu = :contenu, photo = :photo, categorie_id = :categorie_id WHERE id = :id";
 
         $stmt = Database::getInstance()->getConnection()->prepare($query);
 
@@ -183,9 +183,11 @@ class Cours
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':contenu', $contenu);
         $stmt->bindParam(':photo', $photo);
+        $stmt->bindParam(':categorie_id', $categorieId, PDO::PARAM_INT);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
         $stmt->execute();
+
         return $cours;
     }
 
