@@ -50,44 +50,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // editin cours 
 if (isset($_POST['update_cour'])) {
-        $courid = (int)$_POST['id'];
-        $name = $_POST['coursname'];
-        $description = $_POST['courdescription'];
-        $contenu = $_POST['courcontenu'];
-        $categorieId = (int)$_POST['courcategorie'];
+  $courid = (int)$_POST['id'];
+  $name = $_POST['coursname'];
+  $description = $_POST['courdescription'];
+  $contenu = $_POST['courcontenu'];
+  $categorieId = (int)$_POST['courcategorie'];
 
-        $photo = '';
-        if (!empty($_FILES['photo']['name'])) {
-            $uploadDir = '../../public/admin/img/';
-            $photoName = basename($_FILES['photo']['name']);
-            $photoPath = $uploadDir . $photoName;
-            if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
-                $photo = $photoPath;
-            }
-        }
+  $photo = '';
+  if (!empty($_FILES['photo']['name'])) {
+    $uploadDir = '../../public/admin/img/';
+    $photoName = basename($_FILES['photo']['name']);
+    $photoPath = $uploadDir . $photoName;
+    if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
+      $photo = $photoPath;
+    }
+  }
 
-        $cour = new Cours();
-        $cour->setId($courid);
-        $cour->setName($name);
-        $cour->setDescription($description);
-        $cour->setContenu($contenu);
-        if (!empty($photo)) {
-            $cour->setPhoto($photo);
-        }
+  $cour = new Cours();
+  $cour->setId($courid);
+  $cour->setName($name);
+  $cour->setDescription($description);
+  $cour->setContenu($contenu);
+  if (!empty($photo)) {
+    $cour->setPhoto($photo);
+  }
 
-        $categorie = new Categorie();
-        $categorie->setId($categorieId);
-        $cour->setCategorie($categorie);
+  $categorie = new Categorie();
+  $categorie->setId($categorieId);
+  $cour->setCategorie($categorie);
 
-        $cour->update($cour);
+  $cour->update($cour);
 
-        header('Location: cours.php');
-        exit;
-      }
-
-
+  header('Location: cours.php');
+  exit;
+}
 
 
+
+
+
+
+if (isset($_GET['delete_id'])) {
+    $coursId = (int)$_GET['delete_id'];
+    $cours = new Cours();
+    $deletedRows = $cours->delete($coursId);
+
+    if ($deletedRows > 0) {
+        header("Location: cours.php");
+        exit();
+    } else {
+        echo "Error deleting course";
+    }
+}
 
 
 ?>
@@ -308,14 +322,12 @@ if (isset($_POST['update_cour'])) {
                           Edit
                         </a>
 
-                        <a>
+                        <a href="cours.php?delete_id=<?= $cour->getId(); ?>" >
+                          <button type="button" class="btn d-inline-flex btn-sm btn-danger mx-1">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </a>
 
-
-                          <button
-                            type="button"
-                            onclick="showSweetAlert()"
-                            class="btn d-inline-flex btn-sm btn-danger mx-1">
-                            <i class="bi bi-trash"></i></button></a>
                       </div>
 
 
@@ -427,48 +439,48 @@ if (isset($_POST['update_cour'])) {
 
 
 
- <!-- Edit Course Modal -->
-<!-- Edit Course Modal -->
-<div class="modal fade" id="editCourseModal" tabindex="-1" aria-labelledby="editCourseModalLabel" aria-hidden="true">
+  <!-- Edit Course Modal -->
+  <!-- Edit Course Modal -->
+  <div class="modal fade" id="editCourseModal" tabindex="-1" aria-labelledby="editCourseModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editCourseModalLabel">Edit Course</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="cours.php" enctype="multipart/form-data">
-                    <input type="hidden" name="id" id="edit-id">
-                    <div class="mb-3">
-                        <label for="edit-name" class="form-label">Course Name</label>
-                        <input type="text" class="form-control" id="edit-name" name="coursname" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-description" class="form-label">Description</label>
-                        <input type="text" class="form-control" id="edit-description" name="courdescription" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-contenu" class="form-label">Content</label>
-                        <input type="text" class="form-control" id="edit-contenu" name="courcontenu" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-photo" class="form-label">Photo</label>
-                        <input type="file" class="form-control" id="edit-photo" name="photo">
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-categorie" class="form-label">Category</label>
-                        <select class="form-select" id="edit-categorie" name="courcategorie" required>
-                            <option value="">Select Category</option>
-                            <option value="1">Mathimatik</option>
-                            <option value="2">Informatique</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary" name="update_cour">Update</button>
-                </form>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editCourseModalLabel">Edit Course</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+          <form method="POST" action="cours.php" enctype="multipart/form-data">
+            <input type="hidden" name="id" id="edit-id">
+            <div class="mb-3">
+              <label for="edit-name" class="form-label">Course Name</label>
+              <input type="text" class="form-control" id="edit-name" name="coursname" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit-description" class="form-label">Description</label>
+              <input type="text" class="form-control" id="edit-description" name="courdescription" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit-contenu" class="form-label">Content</label>
+              <input type="text" class="form-control" id="edit-contenu" name="courcontenu" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit-photo" class="form-label">Photo</label>
+              <input type="file" class="form-control" id="edit-photo" name="photo">
+            </div>
+            <div class="mb-3">
+              <label for="edit-categorie" class="form-label">Category</label>
+              <select class="form-select" id="edit-categorie" name="courcategorie" required>
+                <option value="">Select Category</option>
+                <option value="1">Mathimatik</option>
+                <option value="2">Informatique</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" name="update_cour">Update</button>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
 
   <!-- end Modal edit -->
