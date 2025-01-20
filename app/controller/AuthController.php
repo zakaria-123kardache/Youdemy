@@ -35,6 +35,7 @@ class AuthController {
             $signupform->password,
             $signupform->passwordConfirmation,
             $signupform->photo,
+            $signupform->photo,
             $role
         );
 

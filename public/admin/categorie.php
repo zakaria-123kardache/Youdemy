@@ -15,7 +15,7 @@ if (!$categories) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['edit-categorie-name'];
     $description = $_POST['edit-categorie-description'];
-
+ 
     $photo = '';
 
 
