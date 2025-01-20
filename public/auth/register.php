@@ -1,10 +1,25 @@
+<?php
+require_once("../../vendor/autoload.php");
+require '../../app/controller/Auth/RegisterController.php';
+
+use App\Controllers\Auth\RegisterController;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $registerController = new RegisterController();
+    $registerController->register($_POST);
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Signin-YouDemy</title>
+        <title>Signup-Youdemy</title>
         <link rel="stylesheet" href="./dist/main.css" />
         <link rel="icon" type="image/png" href="./dist/images/favicon/favicon.png" />
     </head>
@@ -13,13 +28,15 @@
         <div class="loader">
             <span class="loader-spinner">Loading...</span>
         </div>
-
         <!-- Header Starts Here -->
         <header>
             <nav class="navbar navbar-expand-xl navbar-light bg-transparent">
                 <div class="container">
                     <!-- Logo -->
-                    <a class="navbar-brand"  href="index.html"> <img style="height: 60px; width: 60px;" src="../../public/admin/img/youdemy.jpg" alt="Logo" class="img-fluid" /> </a>
+                    <!-- <a class="navbar-brand" href="index.html"> <img src="dist/images/logo/logo.png" alt="Logo" class="img-fluid" /> </a> -->
+                    <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0 mt-3" href="#">
+                    <h3 class="text-success"><img src="" width="70"><span class="text-info">YOU</span>DemY</h3>
+                </a>
                     <button class="menu-icon-container">
                         <span class="menu-icon"></span>
                     </button>
@@ -30,6 +47,12 @@
                                 <a class="nav-link" aria-current="page" href="#">
                                     Home
                                 </a>
+                                <div class="nav-item--dropdown">
+                                    <ul>
+                                        <li><a href="index.html"> Homepage 01</a></li>
+                                 
+                                    </ul>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="#">
@@ -44,6 +67,7 @@
                                 </div>
                             </li>
                             <li class="nav-item"><a class="nav-link" aria-current="page" href="about.html">About</a></li>
+                           
                             <li class="nav-item">
                                 <a class="nav-link active" href="#">
                                     Pages
@@ -63,7 +87,7 @@
                                         </li>
                                         <li><a href="instructor-profile.html">Instructor Profile</a></li>
                                         <li><a href="become-instructor.html">Become Teacher</a></li>
-                                   
+                                       
                                         <li><a href="comingsoon.html">Coming Soon</a></li>
                                     </ul>
                                 </div>
@@ -71,8 +95,8 @@
                             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                         </ul>
                         <div class="d-flex align-items-center justify-content-between rightContent">
-                          
-                            <a href="signin.html" class="button button--text">Sign in</a> <a href="signup.html" class="button button--dark">Sign Up</a>
+                           
+                            <a href="./login.php" class="button button--text">Sign in</a> <a href="./register.php" class="button button--dark">Sign Up</a>
                         </div>
                     </div>
 
@@ -126,7 +150,7 @@
                                         </a>
                                         <ul class="navbar-mobile__menu-dropmenu">
                                             <li><a href="index.html" class="active">Homepage 01</a></li>
-                                        
+                                     
                                         </ul>
                                     </li>
                                     <li class="navbar-mobile__menu-item">
@@ -164,8 +188,37 @@
                                             </span>
                                         </a>
                                     </li>
-                                   
-                                   
+                                  
+                                    <li class="navbar-mobile__menu-item active">
+                                        <a href="#">
+                                            <span class="navbar-mobile__menu-link">
+                                                Pages
+                                            </span>
+                                            <span class="navbar-mobile__menu-dropicon">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="24"
+                                                    height="24"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="feather feather-chevron-right"
+                                                >
+                                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                                </svg>
+                                            </span>
+                                        </a>
+                                        <ul class="navbar-mobile__menu-dropmenu">
+                                            <li><a href="students-profile.html">Students Profile</a></li>
+                                            <li><a href="instructor-profile.html">Instructor Teacher</a></li>
+                                            <li><a href="become-instructor.html">become Teacher</a></li>
+                                           
+                                            <li><a href="comingsoon.html">coming soon</a></li>
+                                        </ul>
+                                    </li>
                                     <li class="navbar-mobile__menu-item">
                                         <a href="contact.html">
                                             <span class="navbar-mobile__menu-link">
@@ -247,21 +300,21 @@
             </nav>
         </header>
 
-        <!-- SignIn Area Starts Here -->
-        <section class="section signup-area signin-area">
+        <!-- SignUp Area Starts Here -->
+        <section class="signup-area overflow-hidden">
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-xl-5 order-2 order-xl-0">
+                <div class="row align-items-center justify-content-md-center">
+                    <div class="col-lg-5 order-2 order-lg-0">
                         <div class="signup-area-textwrapper">
-                            <h2 class="font-title--md mb-0">Sign in</h2>
-                            <p class="mt-2 mb-lg-4 mb-3">Don't have account? <a href="signup.html" class="text-black-50">Sign up</a></p>
+                            <h2 class="font-title--md mb-0">Sign Up</h2>
+                            <p class="mt-2 mb-lg-4 mb-3">Already have account? <a href="./login.php" class="text-black-50">Sign In</a></p>
                             <form action="#">
                                 <div class="form-element success">
                                     <div class="form-alert">
-                                        <label for="name">Email</label>
+                                        <label for="name">Full Name</label>
                                     </div>
                                     <div class="form-alert-input">
-                                        <input type="email" placeholder="KArdash Zakaria" id="name" />
+                                        <input type="text" placeholder="KArdash zakaria" id="name" />
                                         <div class="form-alert-icon">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -280,15 +333,61 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-element active">
-                                    <div class="d-flex justify-content-between">
-                                        <label for="confirm-password">Password</label>
-                                        <a href="" class="text-primary fs-6">Forget Password</a>
+                                <div class="form-element error">
+                                    <div class="form-alert">
+                                        <label for="email">Email</label>
+                                        <span>*please enter a valid email</span>
                                     </div>
-
+                                    <div class="form-alert-input">
+                                        <input type="email" placeholder="KArdash@gmail.com" id="email" />
+                                        <div class="form-alert-icon">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="feather feather-alert-circle"
+                                            >
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-element active">
+                                    <label for="password" class="w-100" style="text-align: left;">password</label>
+                                    <div class="form-alert-input">
+                                        <input type="password" placeholder="Type here..." id="password" />
+                                        <div class="form-alert-icon" onclick="showPassword('password',this)">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="feather feather-eye"
+                                            >
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-element">
+                                    <label for="confirm-password" class="w-100" style="text-align: left;">Confirm password</label>
                                     <div class="form-alert-input">
                                         <input type="password" placeholder="Type here..." id="confirm-password" />
-                                        <div class="form-alert-icon" onclick="showPassword('confirm-password',this);">
+                                        <div class="form-alert-icon" onclick="showPassword('confirm-password',this)">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width="24"
@@ -309,12 +408,12 @@
                                 </div>
                                 <div class="form-element d-flex align-items-center terms">
                                     <input class="checkbox-primary me-1" type="checkbox" id="agree" />
-                                    <label for="agree" class="text-secondary mb-0 fs-6">Remember me</label>
+                                    <label for="agree" class="text-secondary mb-0">Accept the <a href="#" style="text-decoration: underline;">Terms</a> and <a href="#" style="text-decoration: underline;">Privacy Policy</a></label>
                                 </div>
                                 <div class="form-element">
-                                    <button type="submit" class="button button-lg button--primary w-100">Sign in</button>
+                                    <button type="submit" class="button button-lg button--primary w-100">Sign UP</button>
                                 </div>
-                                <span class="d-block text-center text-secondary">or sign in with</span>
+                                <span class="d-block text-center text-secondary">or sign up with</span>
                                 <div class="d-flex align-items-center flex-wrap mt-3 signinButtons">
                                     <a href="#" class="d-flex text-secondary align-items-center justify-content-center signup-with border fb rounded-1">
                                         <svg class="me-2" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -367,7 +466,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-xl-7 order-1 order-xl-0">
+                    <div class="col-lg-7 order-1 order-lg-0">
                         <div class="signup-area-image">
                             <img src="https://maghreb.simplonline.co/_next/image?url=https%3A%2F%2Fsimplonline-v3-prod.s3.eu-west-3.amazonaws.com%2Fmedia%2Fimage%2Fjpg%2Fezgif-4-a28720937b-6784ca1cae726194474837.jpg&w=1280&q=75" alt="Illustration Image" class="img-fluid" />
                         </div>
@@ -375,17 +474,15 @@
                 </div>
             </div>
         </section>
-        <!-- SignIn Area Ends Here -->
+        <!-- SignUp Area Ends Here -->
 
         <!-- Dot Images Starts Here -->
         <div class="dot-images">
-            <img src="dist/images/shape/dots/dots-img-10.png" alt="shape" style="z-index: 1;" class="img-fluid first-dotimage" />
-            <img src="dist/images/shape/dots/dots-img-07.png" alt="shape" class="img-fluid second-dotimage" />
+            <img src="./dist/images/shape/dots/dots-img-05.png" alt="shape" class="img-fluid first-dotimage" />
+            <img src="./dist/images/shape/dots/dots-img-07.png" alt="shape" class="img-fluid second-dotimage" />
         </div>
         <!-- Dot Images Ends Here -->
-
-
-        <script src="./src/js//jquery.min.js"></script>
+        <script src="./src/js/jquery.min.js"></script>
         <script src="./src/js/bootstrap.bundle.min.js"></script>
         <script src="./src/scss/vendors/plugin/js/isotope.pkgd.min.js"></script>
         <script src="./src/scss/vendors/plugin/js/jquery.magnific-popup.min.js"></script>
