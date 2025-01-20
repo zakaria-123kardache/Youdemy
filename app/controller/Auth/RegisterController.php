@@ -1,29 +1,34 @@
-<?php
+<?php 
 namespace App\Controllers\Auth;
 
-use App\Models\RegisterModel;
+use App\Model\Auth\RegisterModel;
 
 class RegisterController {
     public function register($postData) {
-        
-        $firstName = $postData['nom'];
-        $lastName = $postData['prenom'];
+        $firstname = $postData['firstname'];
+        $lastname = $postData['lastname'];
         $email = $postData['email'];
-        $password = password_hash($postData['password'], PASSWORD_BCRYPT);
-        $roleId = $postData['role_id'] === "candidate" ? 1 : ($postData['role_id'] === "recruiter" ? 2 : null);
-        $skills = isset($postData['skills']) ? $postData['skills'] : null;
-        $companyName = isset($postData['company_name']) ? $postData['company_name'] : null;
+        $password = $postData['password'];
+        
+        // Check if role key exists in postData
+        if (!isset($postData['role'])) {
+            echo "Role is required.";
+            return;
+        }
 
-        if (!$roleId) {
+        $roleId = $postData['role']; // Changed from role_id to role to match form
+        
+        // Validate role ID
+        if (!in_array($roleId, [2, 3])) { // Only allow role IDs 2 and 3
             echo "Invalid role selected.";
             return;
         }
 
         $registerModel = new RegisterModel();
-        $result = $registerModel->createUser($firstName, $lastName, $email, $password, $roleId, $skills, $companyName);
+        $result = $registerModel->create($firstname, $lastname, $email, $password, $roleId);
 
         if ($result === true) {
-            header('location: login.php');
+            header('location: ../../public/auth/login.php');
         } else {
             echo "Registration failed: " . $result;
         }

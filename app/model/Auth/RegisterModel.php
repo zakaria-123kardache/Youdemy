@@ -1,8 +1,7 @@
 <?php
-namespace App\Models;
+namespace App\Model\Auth; 
 
-
-use App\core\Database;
+use App\Core\Database;
 use Exception;
 
 
@@ -10,19 +9,20 @@ class RegisterModel {
     private $connexion;
 
     public function __construct() {
-        $db = new Database();
+       
+        $db = Database::getInstance();
         $this->connexion = $db->getConnection();
     }
 
-    public function createUser($firstName, $lastName, $email, $password, $roleId, $skills = null, $companyName = null) {
+    public function create($firstname, $lastname, $email, $password, $roleId) {
         try {
             $this->connexion->beginTransaction();
     
-            $userQuery = "INSERT INTO users (nom, prenom, email, password, role_id) 
-                          VALUES (:nom, :prenom, :email, :password, :role_id)";
-            $stmt = $this->connexion->prepare($userQuery);
-            $stmt->bindParam(':nom', $firstName);
-            $stmt->bindParam(':prenom', $lastName);
+            $query = "INSERT INTO utilisateurs (firstname, lastname, email, password, role_id) 
+                          VALUES (:firstname, :firstname, :email, :password, :role_id)";
+            $stmt = $this->connexion->prepare($query);
+            $stmt->bindParam(':firstname', $firstname);
+            $stmt->bindParam(':lastname', $lastname);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $password);
             $stmt->bindParam(':role_id', $roleId);
@@ -30,20 +30,7 @@ class RegisterModel {
     
             $userId = $this->connexion->lastInsertId();
     
-            if ($roleId == 'candidate' && $skills) { 
-                $candidateQuery = "INSERT INTO candidats (skills, user_id) VALUES (:skills, :user_id)";
-                $stmt = $this->connexion->prepare($candidateQuery);
-                $stmt->bindParam(':skills', $skills);
-                $stmt->bindParam(':user_id', $userId);
-                $stmt->execute();
-            } if ($roleId == 'recruiter' && $companyName) { 
-                $recruiterQuery = "INSERT INTO recruteurs (nom_entreprise, user_id) VALUES (:nom_entreprise, :user_id)";
-                $stmt = $this->connexion->prepare($recruiterQuery);
-                $stmt->bindParam(':nom_entreprise', $companyName);
-                $stmt->bindParam(':user_id', $userId);
-                $stmt->execute();
-            }
-    
+         
             $this->connexion->commit();
             return true; // Return true for success
         } catch (Exception $e) {

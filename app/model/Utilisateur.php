@@ -17,6 +17,7 @@ class Utilisateur
    private string $photo = "";
    private Role $role;
    private int $role_id = 0;
+   private $roleName;
 
    public function __construct() {}
 
@@ -81,6 +82,7 @@ class Utilisateur
    }
    public function getRole(): Role
    {
+      return new Role($this->role_id, $this->roleName);
       return $this->role;
    }
    public function getRoleId(): int

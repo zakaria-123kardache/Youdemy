@@ -1,13 +1,20 @@
 <?php
 
-
+namespace App\Model\Auth;
+namespace App\Controllers\Auth; 
 
 
 namespace App\Controllers\Auth;
 
-require_once(__DIR__ . '/../../../../vendor/autoload.php');
-require_once(__DIR__ . '/../../model/Auth/LoginModel.php');
-use App\Models\Auth\LoginModel;
+// require_once('./public/admin/dashbordadmin.php')
+
+require_once(__DIR__ . '/../../../vendor/autoload.php');
+use App\Model\Auth\LoginModel;
+
+
+
+
+
 
 class LoginController{
 
@@ -21,15 +28,15 @@ class LoginController{
         else{
             if($user->getRole()->getRoleName() == "Admin")
             {
-                header("Location:./public/admin/dashbordadmin.php");
+                header("Location:../../public/admin/dashbordadmin.php");
             }
             else if($user->getRole()->getRoleName() == "Etudiant")
             {
-                header("Location:./public/etudiant/dashbordetudiant.php");
-                }
-                else if($user->getRole()->getRoleName() == "Enseignant")
-                {
-                header("Location:./public/enseignant/dashbordenseignant.php");
+                header("Location:../../public/admin/dashbordadmin.php");
+            }
+            else if($user->getRole()->getRoleName() == "Enseignant")
+            {
+                header("Location:../../public/admin/dashbordadmin.php");
             }
         }
     }
