@@ -1,3 +1,12 @@
+<?php
+
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en" >
 <head>
@@ -10,11 +19,9 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 
-  <!-- <link rel="icon" type="image/png" href="dist/images/favicon/favicon.png" /> -->
+
 </head>
-<!-- bytewebster.com -->
-<!-- bytewebster.com -->
-<!-- bytewebster.com -->
+
 <body>
 <!-- Dashboard -->
 <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
@@ -140,37 +147,7 @@
                   <h5 class="mb-0">Applications</h5>
                 </div>
 
-                <!-- <div class="row justify-content-center">
-                    <div class="col-md-4">
-                      <div class="product-card bg-white rounded-4 shadow-sm h-100 position-relative">
-                        <span class="badge bg-danger">New</span>
-                        <div class="overflow-hidden">
-                          <img src="https://images.unsplash.com/photo-1669937401489-fb1ebb31d762?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxNXx8aGVhZHBob25lfGVufDB8MHx8fDE3MzA1NTUzNjl8MA&ixlib=rb-4.0.3&q=80&w=1080" class="product-image w-100" alt="Product">
-                        </div>
-                        <div class="p-4">
-                          <h5 class="fw-bold mb-3">Premium Wireless Headphones</h5>
-                          <div class="d-flex align-items-center mb-3">
-                            <div class="me-2">
-                              <i class="fas fa-star text-warning"></i>
-                              <i class="fas fa-star text-warning"></i>
-                              <i class="fas fa-star text-warning"></i>
-                              <i class="fas fa-star text-warning"></i>
-                              <i class="fas fa-star-half-alt text-warning"></i>
-                            </div>
-                            <small class="text-muted">(4.5/5)</small>
-                          </div>
-                          <p class="text-muted mb-4">Experience crystal clear sound with our premium wireless headphones featuring
-                            noise cancellation.</p>
-                          <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">$299</span>
-                            <button class="btn btn-custom text-white px-4 py-2 rounded-pill">
-                              Add to Cart
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
+             
 
 
                   <div class="row justify-content-start">
@@ -357,6 +334,6 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-  <script src="script.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
