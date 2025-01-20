@@ -43,18 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $photo = '';
 
-  if (!empty($_FILES['photo']['name'])) {
-    $uploadDir = '../../public/admin/img/';
-    $photoName = basename($_FILES['photo']['name']);
-    $photoPath = $uploadDir . $photoName;
 
-    if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
-      $photo = $photoPath;
-    } else {
-      echo 'failed to uploud img';
-      exit;
+    if (!empty($_FILES['categorie-photo']['name'])) {
+        $uploadDir = '../../public/admin/img/';
+        $photoName = basename($_FILES['categorie-photo']['name']);
+        $photoPath = $uploadDir . $photoName;
+
+        if (move_uploaded_file($_FILES['categorie-photo']['tmp_name'], $photoPath)) {
+            $photo = $photoPath;
+        } else {
+            echo 'Failed to upload image';
+            exit;
+        }
     }
-  }
 
   $user = new Utilisateur();
   $user->setFirstname($firstname);

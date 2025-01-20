@@ -83,6 +83,9 @@ if (isset($_POST['update_categorie'])) {
 
 
 
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -272,21 +275,19 @@ if (isset($_POST['update_categorie'])) {
                                                     <a href="#"
                                                         class="btn d-inline-flex btn-sm btn-warning mx-1"
                                                         data-bs-toggle="modal"
-                                                        data-bs-target="#editcategorieModal"
-                                                       >
+                                                        data-bs-target="#editcategorieModal">
                                                         <span class="pe-2">
                                                             <i class="bi bi-pencil"></i>
                                                         </span>
                                                         Edit
                                                     </a>
 
-                                                    <a>
-
-                                                        <button
-                                                            type="button"
-                                                            onclick="showSweetAlert()"
-                                                            class="btn d-inline-flex btn-sm btn-danger mx-1">
-                                                            <i class="bi bi-trash"></i></button></a>
+                                                    <a href="" 
+                                                       >
+                                                        <button type="button" class="btn d-inline-flex btn-sm btn-danger mx-1">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </a>
                                                 </div>
                                             </div>
 
