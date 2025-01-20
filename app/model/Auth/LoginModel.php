@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Models;
 
 use App\Model\Role;
 use App\core\Database;
 use App\Model\Utilisateur;
 use PDO;
+
 
 class LoginModel{
     private $connexion; 

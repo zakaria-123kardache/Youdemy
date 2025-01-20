@@ -1,11 +1,18 @@
 <?php
+
+
+
 namespace App\Controllers\Auth;
 
+require_once("../../vendor/autoload.php");
+// require_once('./app/controller/Auth/LoginController.php');
+require_once(__DIR__ . '/../../app/Model/Auth/LoginModel.php');
+use App\Model\Auth\LoginModel;
 
-// require_once('./public/admin/dashbordadmin.php')
+// require_once(__DIR__ . '/../../model/Auth/LoginModel.php');
 
 
-use App\Models\LoginModel;
+
 
 
 class LoginController{

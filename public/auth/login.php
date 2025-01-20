@@ -2,6 +2,9 @@
 <?php
 
 require_once("../../vendor/autoload.php");
+// require_once('./app/controller/Auth/LoginController.php');
+require_once(__DIR__ . '/../../app/controller/Auth/LoginController.php');
+
 use App\Controllers\Auth\LoginController;
 
 
@@ -292,7 +295,7 @@ if(isset($_POST["submit"]))
                             <p class="mt-2 mb-lg-4 mb-3">Don't have account? <a href="./register.php" class="text-black-50">Sign up</a></p>
 
 
-                            <form action="./login.php" method="POST">
+                            <form action="" method="POST">
                                 <div class="form-element success">
                                     <div class="form-alert">
                                         <label for="name">Email</label>
@@ -350,7 +353,7 @@ if(isset($_POST["submit"]))
                                     <label for="agree" class="text-secondary mb-0 fs-6">Remember me</label>
                                 </div>
                                 <div class="form-element">
-                                    <button type="submit" class="button button-lg button--primary w-100">Sign in</button>
+                                    <button name = "submit"type="submit" class="button button-lg button--primary w-100">Sign in</button>
                                 </div>
                                 <span class="d-block text-center text-secondary">or sign in with</span>
                                 <div class="d-flex align-items-center flex-wrap mt-3 signinButtons">
@@ -410,7 +413,7 @@ if(isset($_POST["submit"]))
                     </div>
                     <div class="col-xl-7 order-1 order-xl-0">
                         <div class="signup-area-image">
-                            <img src="https://maghreb.simplonline.co/_next/image?url=https%3A%2F%2Fsimplonline-v3-prod.s3.eu-west-3.amazonaws.com%2Fmedia%2Fimage%2Fjpg%2Fezgif-4-a28720937b-6784ca1cae726194474837.jpg&w=1280&q=75" alt="Illustration Image" class="img-fluid" />
+                            <img src="https://marketing-bienveillant.com/wp-content/uploads/2019/06/formation-elearning-2.jpg" alt="Illustration Image" class="img-fluid" />
                         </div>
                     </div>
                 </div>

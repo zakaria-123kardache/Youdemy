@@ -468,7 +468,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="col-lg-7 order-1 order-lg-0">
                         <div class="signup-area-image">
-                            <img src="https://maghreb.simplonline.co/_next/image?url=https%3A%2F%2Fsimplonline-v3-prod.s3.eu-west-3.amazonaws.com%2Fmedia%2Fimage%2Fjpg%2Fezgif-4-a28720937b-6784ca1cae726194474837.jpg&w=1280&q=75" alt="Illustration Image" class="img-fluid" />
+                            <img src="https://marketing-bienveillant.com/wp-content/uploads/2019/06/formation-elearning-2.jpg" alt="Illustration Image" class="img-fluid" />
                         </div>
                     </div>
                 </div>
