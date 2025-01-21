@@ -14,39 +14,38 @@ class Utilisateur
    private string $email = "";
    private string $password = "";
    private  string $passwordConfig = "";
-   // private ?string $photo; 
-   private ?string $photo = null; 
-
+   private string $photo = "";
    private Role $role;
    private int $role_id = 0;
-   private $rolename;
+   private $roleName;
 
    public function __construct() {
+      $this->photo = 'default.jpg';
+   }
+
+
+   public static function instance(string $firstname, string $lastname, string $email, string $password , string $passwordConfig ,string $photo , int $role_id ,Role $role){
+      $instance = new self();
+      $instance->firstname = $firstname ; 
+      $instance->lastname = $lastname ; 
+      $instance->email = $email ; 
+      $instance->password = $password ; 
+      $instance->passwordConfig = $passwordConfig ; 
+      $instance->photo = $photo ;
+      $instance->role= $role ;   
+      $instance->role_id= $role_id ;   
+
+
+      return $instance ; 
+   }
+   public static function instanceWithEmailAndPassword(string $email, string $password){
+      $instance = new self();
       
-  }
+      $instance->email = $email ; 
+      $instance->password = $password ; 
 
-
-
-  public static function instance(string $firstname, string $lastname, string $email, string $password, string $passwordConfig, string $photo, int $role_id, Role $role) {
-   $instance = new self();
-   $instance->firstname = $firstname;
-   $instance->lastname = $lastname;
-   $instance->email = $email;
-   $instance->password = $password;
-   $instance->passwordConfig = $passwordConfig;
-   $instance->photo = $photo;
-   $instance->role = $role;
-   $instance->role_id = $role_id;
-
-   return $instance;
-}
-   public static function instanceWithEmailAndPassword(string $email, string $password) {
-        $instance = new self();
-        $instance->email = $email;
-        $instance->password = $password;
-
-        return $instance;
-    }
+      return $instance ; 
+   }
 
 
 
@@ -84,18 +83,10 @@ class Utilisateur
       return $this->passwordConfig;
    }
    public function getRole(): Role
-    {
-        if (!isset($this->rolename)) {
-            $query = "SELECT r.rolename FROM roles r 
-                     JOIN utilisateurs u ON u.role_id = r.id 
-                     WHERE u.id = :user_id";
-            $stmt = Database::getInstance()->getConnection()->prepare($query);
-            $stmt->execute(['user_id' => $this->id]);
-            $this->rolename = $stmt->fetchColumn() ?: 'Etudiant'; 
-        }
-        
-        return new Role($this->role_id, $this->rolename);
-    }
+   {
+      return new Role($this->role_id, $this->roleName);
+      return $this->role;
+   }
    public function getRoleId(): int
    {
       return $this->role_id;
@@ -163,52 +154,22 @@ class Utilisateur
 
 
    public function create(Utilisateur $user): Utilisateur
-{
-    try {
-        $roleId = $user->getRoleId();
-        
+   {
+      $query = "INSERT INTO utilisateurs (firstname, lastname, email, password, photo, role_id) VALUES ('"
+         . $user->getFirstname() . "', '"
+         . $user->getLastname() . "', '"
+         . $user->getEmail() . "', '"
+         . $user->getPassword() . "', '"
+         . $user->getPhoto() . "', "
+         . $user->getRole()->getId() . ");";
 
-        if ($roleId <= 0) {
+      $stmt = Database::getInstance()->getConnection()->prepare($query);
+      $stmt->execute();
 
-            $defaultRoleQuery = "SELECT id FROM roles ORDER BY id ASC LIMIT 1";
-            $defaultRoleStmt = Database::getInstance()->getConnection()->prepare($defaultRoleQuery);
-            $defaultRoleStmt->execute();
-            $roleId = $defaultRoleStmt->fetchColumn();
-            
-           
-            
-            $user->setRoleId($roleId);
-        } else {
-  
-            $roleCheckQuery = "SELECT id FROM roles WHERE id = ?";
-            $roleCheck = Database::getInstance()->getConnection()->prepare($roleCheckQuery);
-            $roleCheck->execute([$roleId]);
-            
-        }
+      $user->setId(Database::getInstance()->getConnection()->lastInsertId());
 
-        $query = "INSERT INTO utilisateurs (firstname, lastname, email, password, photo, role_id) 
-                 VALUES (:firstname, :lastname, :email, :password, :photo, :role_id)";
-
-        $stmt = Database::getInstance()->getConnection()->prepare($query);
-        
-        $stmt->execute([
-            ':firstname' => $user->getFirstname(),
-            ':lastname' => $user->getLastname(),
-            ':email' => $user->getEmail(),
-            ':password' => $user->getPassword(),
-            ':photo' => $user->getPhoto() ?: 'default.jpg',
-            ':role_id' => $roleId
-        ]);
-
-        $user->setId(Database::getInstance()->getConnection()->lastInsertId());
-        
-        return $user;
-        
-    } catch (\PDOException $e) {
-        error_log("Database error: " . $e->getMessage());
-        throw new \Exception("Error creating user");
-    }
-}
+      return $user;
+   }
 
    public function delete(int $id): int
 {
@@ -239,27 +200,15 @@ class Utilisateur
    }
 
 
-   public function findAll(): array {
-      $query = "SELECT u.*, r.rolename 
-               FROM utilisateurs u 
-               LEFT JOIN roles r ON u.role_id = r.id";
+   public function findAll(): array
+   {
+      $query = "SELECT * FROM utilisateurs";
+
       $statement = Database::getInstance()->getConnection()->prepare($query);
       $statement->execute();
-  
-      $results = $statement->fetchAll(PDO::FETCH_CLASS, Utilisateur::class);
-  
-      foreach ($results as $result) {
-          if (is_null($result->photo)) {
-              $result->photo = 'default.jpg';
-          }
-          if (!isset($result->rolename)) {
-              $result->rolename = 'Etudiant';
-          }
-      }
-  
-      return $results;
-  }
-  
+
+      return $statement->fetchAll(PDO::FETCH_CLASS, Utilisateur::class);
+   }
 
 
 
