@@ -17,7 +17,7 @@ class Utilisateur
    private string $photo = "";
    private Role $role;
    private int $role_id = 0;
-   private $roleName;
+   private $rolename;
 
    public function __construct() {}
 
@@ -82,9 +82,21 @@ class Utilisateur
    }
    public function getRole(): Role
    {
-      return new Role($this->role_id, $this->roleName);
-      return $this->role;
+       if (!isset($this->rolename)) {
+
+           $query = "SELECT r.rolename FROM roles r 
+                    JOIN utilisateurs u ON u.role_id = r.id 
+                    WHERE u.id = :user_id";
+           $stmt = Database::getInstance()->getConnection()->prepare($query);
+           $stmt->execute(['user_id' => $this->id]);
+           $this->rolename = $stmt->fetchColumn() ?: 'Etudiant'; 
+       }
+       
+       return new Role($this->role_id, $this->rolename);
    }
+
+
+
    public function getRoleId(): int
    {
       return $this->role_id;
@@ -199,14 +211,30 @@ class Utilisateur
 
 
    public function findAll(): array
-   {
-      $query = "SELECT * FROM utilisateurs";
+{
+    $query = "SELECT utilisateurs.*, roles.id as role_id, roles.rolename as roleName
+             FROM utilisateurs
+             JOIN roles ON roles.id = utilisateurs.role_id";
 
-      $statement = Database::getInstance()->getConnection()->prepare($query);
-      $statement->execute();
+    $statement = Database::getInstance()->getConnection()->prepare($query);
+    $statement->execute();
 
-      return $statement->fetchAll(PDO::FETCH_CLASS, Utilisateur::class);
-   }
+    // Initialize empty properties in the class
+    $utilisateurs = [];
+    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+        $utilisateur = new Utilisateur();
+        $utilisateur->setId($row['id'] ?? 0);
+        $utilisateur->setFirstname($row['firstname'] ?? "");
+        $utilisateur->setLastname($row['lastname'] ?? "");
+        $utilisateur->setEmail($row['email'] ?? "");
+        $utilisateur->setPassword($row['password'] ?? "");
+        $utilisateur->setPhoto($row['photo'] ?? "");
+        $utilisateur->setRoleId($row['role_id'] ?? 0);
+        $utilisateurs[] = $utilisateur;
+    }
+
+    return $utilisateurs;
+}
 
    public static function findById(int $id): Utilisateur
    {

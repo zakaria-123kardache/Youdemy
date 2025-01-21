@@ -58,61 +58,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $lastname = $_POST['lastname'];
   $email = $_POST['email'];
   $password = $_POST['password'];
-  $role_id = $_POST['role'];
+  $role_id = $_POST['role'] ?? null; 
 
 
-  $photo = 'default.jpg'; 
+  $photo = 'default.jpg';
   if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-    $uploadDir = '../../public/admin/img/';
-    $photoName = uniqid() . '_' . basename($_FILES['photo']['name']);
-    $photoPath = $uploadDir . $photoName;
+      $uploadDir = '../../public/admin/img/';
+      $photoName = uniqid() . '_' . basename($_FILES['photo']['name']);
+      $photoPath = $uploadDir . $photoName;
 
-    if (!is_dir($uploadDir)) {
-      mkdir($uploadDir, 0777, true);
-    }
+      if (!is_dir($uploadDir)) {
+          mkdir($uploadDir, 0777, true);
+      }
 
-    if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
-      $photo = $photoName;
-    }
+      if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
+          $photo = $photoName;
+      }
   }
 
-
   try {
+    
+      $roleQuery = "SELECT id, rolename FROM roles WHERE id = ?";
+      $stmt = Database::getInstance()->getConnection()->prepare($roleQuery);
+      $stmt->execute([$role_id]);
+      $roleData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $roleCheckQuery = "SELECT id, rolename FROM roles WHERE id = ?";
-    $stmt = Database::getInstance()->getConnection()->prepare($roleCheckQuery);
-    $stmt->execute([$role_id]);
-    $roleData = $stmt->fetch(PDO::FETCH_ASSOC);
+      if (!$roleData) {
+       
+          $role_id = 2; 
+          $roleData = ['id' => 2, 'rolename' => 'Etudiant'];
+      }
 
-    if (!$roleData) {
-      throw new \Exception("Selected role does not exist");
-    }
+      // Create user
+      $user = new Utilisateur();
+      $user->setFirstname($firstname);
+      $user->setLastname($lastname);
+      $user->setEmail($email);
+      $user->setPassword($password);
+      $user->setPhoto($photo);
 
-    $user = new Utilisateur();
-    $user->setFirstname($firstname);
-    $user->setLastname($lastname);
-    $user->setEmail($email);
-    $user->setPassword($password);
-    $user->setPhoto($photo);
+      
+      $role = new Role($roleData['id'], $roleData['rolename']);
+      $user->setRole($role);
+      $user->setRoleId($role_id);
 
-    $role = new Role();
-    $role->setId($role_id);
-    $role->setRoleName($roleData['rolename']);
-    $user->setRole($role);
-    $user->setRoleId($role_id);
 
-    $user->create($user);
+      $user->create($user);
 
-    header('Location:user.php');
-    exit;
+      header('Location: user.php');
+      exit;
   } catch (\Exception $e) {
-
-    $error = $e->getMessage();
-
+      $error = $e->getMessage();
   }
 }
 
 
+
+// delet
 
 if (isset($_GET['delete_id'])) {
 
@@ -516,16 +518,13 @@ if (isset($_POST['update_user'])) {
             </div>
 
 
-            <div class="mb-3">
+            <select class="form-select" id="role" name="role">
+              <option value="">Select Role</option>
+              <option value="1">Admin</option>
+              <option value="2" selected>Etudiant</option>
+              <option value="3">Enseignant</option>
+            </select>
 
-              <select class="form-select" id="role" name="role">
-                <option>Role</option>
-                <option value="1">Admin</option>
-                <option value="2" selected>Etudiant</option>
-                <option value="3">Enseignant</option>
-              </select>
-
-            </div>
 
 
 

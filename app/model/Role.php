@@ -13,7 +13,7 @@ class Role
     private string $roledescription = "";
     private string $rolelogo = "";
 
-    public function __construct(int $id = 0,string $rolename = 'Etudiant') {
+    public function __construct(int $id = 0,string $rolename = '') {
         $this->id = $id;
         $this->rolename = $rolename;
     }
