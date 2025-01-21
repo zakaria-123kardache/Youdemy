@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Model\Auth;
 
 use App\Model\Role;
 use App\core\Database;
@@ -12,30 +12,29 @@ class LoginModel{
     private $connexion; 
 
     public function __construct() {
-            $db = new Database();
-            $this->connexion = $db->getConnection();
+        $db = Database::getInstance();  
+        $this->connexion = $db->getConnection();
     }
 
     public function findUserByEmailAndPassword($email, $password){
-
-        $query = "SELECT utilisateurs.id, utilisateurs.email, utilisateurs.password, roles.id as roleid, roles.rolename as `role`
+        $query = "SELECT utilisateurs.id, utilisateurs.email, utilisateurs.password, roles.id as role_id, roles.rolename as roleName
         FROM utilisateurs 
         JOIN roles ON roles.id = utilisateurs.role_id 
-        WHERE utilisateurs.email = :email";
-
+        WHERE utilisateurs.email = :email AND utilisateurs.password = :password";
+    
         $stmt = $this->connexion->prepare($query); 
         $stmt->bindParam(":email", $email);
         $stmt->bindParam(":password", $password);
-
+    
         $stmt->execute();
         
-         $row = $stmt->fetch(PDO::FETCH_CLASS);
-         if(!$row){
-         return null;
-         }
-         else{
-            $role = new Role($row["role_id"], $row["role"]);
-            return new Utilisateur($row['id'],$row["email"],$role,$row["password"]);
-         }
+        $stmt->setFetchMode(PDO::FETCH_CLASS, "App\\Model\\Utilisateur");
+        $user = $stmt->fetch();
+        
+        if(!$user){
+            return null;
+        }
+        
+        return $user;
     }
 }

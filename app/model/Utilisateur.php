@@ -8,20 +8,18 @@ use PDO;
 class Utilisateur
 {
 
-   private int $id = 0;
+   private Int $id = 0;
    private string $firstname = "";
    private string $lastname = "";
    private string $email = "";
    private string $password = "";
-   private  string $passwordConfig = "";
+   private  string $passwordConfig = '';
    private string $photo = "";
    private Role $role;
    private int $role_id = 0;
    private $roleName;
 
-   public function __construct() {
-      $this->photo = 'default.jpg';
-   }
+   public function __construct() {}
 
 
    public static function instance(string $firstname, string $lastname, string $email, string $password , string $passwordConfig ,string $photo , int $role_id ,Role $role){
@@ -209,8 +207,6 @@ class Utilisateur
 
       return $statement->fetchAll(PDO::FETCH_CLASS, Utilisateur::class);
    }
-
-
 
    public static function findById(int $id): Utilisateur
    {

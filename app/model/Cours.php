@@ -5,6 +5,7 @@ namespace App\Model;
 use App\core\Database;
 use Exception;
 use PDO;
+use PDOException;
 
 class Cours
 {
@@ -129,29 +130,47 @@ class Cours
 
     public function create(Cours $cour): Cours
     {
-        $query = "INSERT INTO cours (name, description, contenu, photo, categorie_id) 
-              VALUES (:name, :description, :contenu, :photo, :categorie_id)";
+        try {
+            $query = "INSERT INTO cours (name, description, contenu, photo, categorie_id) 
+                      VALUES (:name, :description, :contenu, :photo, :categorie_id)";
+    
+            $stmt = Database::getInstance()->getConnection()->prepare($query);
+    
+            $name = $cour->getName();
+            $description = $cour->getDescription();
+            $contenu = $cour->getContenu();
+            $photo = $cour->getPhoto();
+            $categorieId = $cour->getCategorie()->getId();
 
-        $stmt = Database::getInstance()->getConnection()->prepare($query);
+            $catCheckQuery = "SELECT id FROM categories WHERE id = ?";
+            $catCheck = Database::getInstance()->getConnection()->prepare($catCheckQuery);
+            $catCheck->execute([$categorieId]);
+    
+            if (!$catCheck->fetch()) {
+                $insertCategoryQuery = "INSERT INTO categories (id, name) VALUES (?, ?)";
+                $catInsertStmt = Database::getInstance()->getConnection()->prepare($insertCategoryQuery);
+                $catInsertStmt->execute([$categorieId, 'Default Category']); 
+            }
+    
 
-        $name = $cour->getName();
-        $description = $cour->getDescription();
-        $contenu = $cour->getContenu();
-        $photo = $cour->getPhoto();
-        $categorieId = $cour->getCategorie()->getId();
-
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':description', $description);
-        $stmt->bindParam(':contenu', $contenu);
-        $stmt->bindParam(':photo', $photo);
-        $stmt->bindParam(':categorie_id', $categorieId, PDO::PARAM_INT);
-
-        $stmt->execute();
-
-        $cour->setId(Database::getInstance()->getConnection()->lastInsertId());
-
-        return $cour;
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':contenu', $contenu);
+            $stmt->bindParam(':photo', $photo);
+            $stmt->bindParam(':categorie_id', $categorieId, PDO::PARAM_INT);
+    
+            $stmt->execute();
+    
+         
+            $cour->setId(Database::getInstance()->getConnection()->lastInsertId());
+    
+            return $cour;
+        } catch (PDOException
+         $e) {
+            throw new Exception("Error creating course: " . $e->getMessage());
+        }
     }
+    
 
 
 

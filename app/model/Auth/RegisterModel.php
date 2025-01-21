@@ -32,10 +32,10 @@ class RegisterModel {
     
          
             $this->connexion->commit();
-            return true; // Return true for success
+            return true; 
         } catch (Exception $e) {
             $this->connexion->rollBack();
-            return $e->getMessage(); // Return the error message
+            return $e->getMessage(); 
         }
     }
     
