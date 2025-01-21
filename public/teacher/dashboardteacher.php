@@ -2,7 +2,6 @@
 <?php
 
 
-
 ?>
 
 
@@ -68,13 +67,6 @@
                     </li>
 
                    
-
-                    <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="./tags.php">
-                            <i class="bi bi-chat"></i> Tags
-                            <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">6</span>
-                        </a>
-                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link " aria-current="page" href="./cours.php">

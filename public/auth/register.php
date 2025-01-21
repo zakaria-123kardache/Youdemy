@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="container">
                 <!-- Logo -->
                 <!-- <a class="navbar-brand" href="index.html"> <img src="dist/images/logo/logo.png" alt="Logo" class="img-fluid" /> </a> -->
-                <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0 mt-3" href="#">
+                <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0 " href="#">
                     <h3 class="text-success"><img src="" width="70"><span class="text-info">YOU</span>DemY</h3>
                 </a>
                 <button class="menu-icon-container">
@@ -386,13 +386,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                             </div>
 
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="role" class="form-label">Role</label>
                                 <select class="form-select" id="role" name="role">
                                     <option value="2">Etudiant</option>
                                     <option value="3">Enseignant</option>
                                 </select>
-                            </div>
+                            </div> -->
+
+                            
+                            <label for="role" class="form-label">Role</label>
+                            <select name="role" id="role">
+                                <option value="2">Etudiant</option>
+                                <option value="3">Enseignant</option>
+                           
+                            </select>
 
                             <div class="form-element active">
                                 <label for="password" class="w-100" style="text-align: left;">password</label>

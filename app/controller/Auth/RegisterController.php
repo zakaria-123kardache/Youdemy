@@ -10,16 +10,16 @@ class RegisterController {
         $email = $postData['email'];
         $password = $postData['password'];
         
-        // Check if role key exists in postData
+       
         if (!isset($postData['role'])) {
             echo "Role is required.";
             return;
         }
 
-        $roleId = $postData['role']; // Changed from role_id to role to match form
+        $roleId = $postData['role']; 
         
-        // Validate role ID
-        if (!in_array($roleId, [2, 3])) { // Only allow role IDs 2 and 3
+  
+        if (!in_array($roleId, [2, 3])) {
             echo "Invalid role selected.";
             return;
         }

@@ -63,7 +63,7 @@ if (isset($_POST['update_categorie'])) {
         $photoName = basename($_FILES['edit-categorie-photo']['name']);
         $photoPath = $uploadDir . $photoName;
         if (move_uploaded_file($_FILES['edit-categorie-photo']['tmp_name'], $photoPath)) {
-            $photo = $photoName; // Store just the filename, not the full path
+            $photo = $photoName; 
         }
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\core\Database;
 use App\Model\Role;
 use App\Model\Utilisateur;
 
@@ -26,6 +27,27 @@ foreach ($users as $user) {
 }
 
 
+foreach ($users as $user) {
+  $role_id = $user->getRoleId();
+  $role = new Role();
+  try {
+    $query = "SELECT rolename FROM roles WHERE id = ?";
+    $stmt = Database::getInstance()->getConnection()->prepare($query);
+    $stmt->execute([$role_id]);
+    $rolename = $stmt->fetchColumn() ?: 'Etudiant';
+
+    $role->setId($role_id);
+    $role->setRoleName($rolename);
+    $user->setRole($role);
+  } catch (\PDOException $e) {
+
+    $role->setId($role_id);
+    $role->setRoleName('Etudiant');
+    $user->setRole($role);
+  }
+}
+
+
 
 // echo $user->getRole()->getRoleName();
 
@@ -34,46 +56,62 @@ foreach ($users as $user) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $firstname = $_POST['firstname'];
   $lastname = $_POST['lastname'];
-  $email  = $_POST['email'];
-  $password  = $_POST['password'];
-  $role_id  = $_POST['role'];
-  // $photo  = $_POST['photo'];
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $role_id = $_POST['role'];
 
 
+  $photo = 'default.jpg'; 
+  if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+    $uploadDir = '../../public/admin/img/';
+    $photoName = uniqid() . '_' . basename($_FILES['photo']['name']);
+    $photoPath = $uploadDir . $photoName;
 
-  $photo = '';
-
-
-    if (!empty($_FILES['categorie-photo']['name'])) {
-        $uploadDir = '../../public/admin/img/';
-        $photoName = basename($_FILES['categorie-photo']['name']);
-        $photoPath = $uploadDir . $photoName;
-
-        if (move_uploaded_file($_FILES['categorie-photo']['tmp_name'], $photoPath)) {
-            $photo = $photoPath;
-        } else {
-            echo 'Failed to upload image';
-            exit;
-        }
+    if (!is_dir($uploadDir)) {
+      mkdir($uploadDir, 0777, true);
     }
 
-  $user = new Utilisateur();
-  $user->setFirstname($firstname);
-  $user->setLastname($lastname);
-  $user->setEmail($email);
-  $user->setPassword($password);
-  $user->setPhoto($photo);
+    if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
+      $photo = $photoName;
+    }
+  }
 
 
-  $role = new Role();
-  $role->setId($role_id);
-  $user->setRole($role);
+  try {
 
+    $roleCheckQuery = "SELECT id, rolename FROM roles WHERE id = ?";
+    $stmt = Database::getInstance()->getConnection()->prepare($roleCheckQuery);
+    $stmt->execute([$role_id]);
+    $roleData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  $user->create($user);
+    if (!$roleData) {
+      throw new \Exception("Selected role does not exist");
+    }
 
-  // header('Location: /youdemy/public/admin/user');
+    $user = new Utilisateur();
+    $user->setFirstname($firstname);
+    $user->setLastname($lastname);
+    $user->setEmail($email);
+    $user->setPassword($password);
+    $user->setPhoto($photo);
+
+    $role = new Role();
+    $role->setId($role_id);
+    $role->setRoleName($roleData['rolename']);
+    $user->setRole($role);
+    $user->setRoleId($role_id);
+
+    $user->create($user);
+
+    header('Location:user.php');
+    exit;
+  } catch (\Exception $e) {
+
+    $error = $e->getMessage();
+
+  }
 }
+
 
 
 if (isset($_GET['delete_id'])) {

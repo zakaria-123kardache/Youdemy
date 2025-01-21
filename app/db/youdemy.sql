@@ -35,16 +35,16 @@ CREATE TABLE tags (
 )
 
 CREATE TABLE cours (
-
-    id INT PRIMARY KEY AUTO_INCREMENT ,
-    name VARCHAR (250),
-    description TEXT , 
-    contenu VARCHAR (255),
-    photo VARCHAR (255),
-    categorie_id INT ,
-    FOREIGN KEY (categorie_id) REFERENCES categories (id)
-
-)
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(250),
+    description TEXT, 
+    contenu VARCHAR(255),
+    photo VARCHAR(255),
+    categorie_id INT,
+    enseignant_id INT,
+    FOREIGN KEY (categorie_id) REFERENCES categories (id),
+    FOREIGN KEY (enseignant_id) REFERENCES utilisateurs (id)
+);
 
 CREATE TABLE tag_cour(
     
